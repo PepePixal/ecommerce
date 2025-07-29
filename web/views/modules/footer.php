@@ -1,11 +1,3 @@
-<style>
-  a:link, a:visited, a:hover, a:active{
-    text-decoration: none !important; 
-    color: inherit !important;
-  }
-</style>
-
-
 <div class="container-fluid bg-dark small">
   <div class="container py-5 text-light">
     <!-- fila 1 col disp pequeño , 2 cols disp mediano (md) , 3 cols disp grande (large) -->
@@ -120,7 +112,7 @@
           <br>
           <textarea id=mensajeContactenos name=mensajeContactenos class=form-control placeholder="Escriba su mensaje" rows=5 required></textarea>
           <br>
-          <input type=submit value=Enviar class="btn btn-default float-end border-0" style="background: #47BAC1; color: white">
+          <input type=submit value=Enviar class="btn btn-default float-end border-0 templateColor">
         </form>
       </div>
 
@@ -129,7 +121,7 @@
 </div>
 
 <!-- Main Footer -->
-<footer class="main-footer" style="background: black; color: white">
+<footer class="main-footer topColor mt-0">
   <div class="container">
     <!-- To the right -->
     <div class="float-end mb-1">

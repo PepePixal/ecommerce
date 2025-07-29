@@ -1,0 +1,35 @@
+body{
+    font-family: "Ubuntu", sans-serif; 
+}
+
+ul, ol{
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+a:link, a:visited, a:hover, a:active{
+text-decoration: none !important; 
+color: inherit !important;
+}
+
+.topColor{
+    background-color: black;
+    color: white;
+}
+
+.templateColor{
+    background: #47BAC1;
+    color: white;
+}
+
+
+/* quita los triangulitos de menus y submenu */
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+/*queita borde sup parte inf del footer*/
+.main-footer{
+    border-top: 0 !important;
+}
