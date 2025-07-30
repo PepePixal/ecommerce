@@ -18,9 +18,9 @@ color: inherit !important;
     color: white;
 }
 
-.templateColor, .templateColor:hover{
+.templateColor, .templateColor:hover, a.templateColor{
     background: #47BAC1;
-    color: white;
+    color: white !important;
 }
 
 /* quita los triangulitos de menus y submenu */
