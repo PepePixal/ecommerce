@@ -3,8 +3,9 @@
 }
 
 .jd-slider .controller{
+    background: rgba(0,0,0,.1);
 	position:  absolute;
-	bottom: 10px;
+	bottom: 0px;
 	left: 0px;
 }
 
@@ -38,10 +39,6 @@
     text-align:right;
 }
 
-.slideOpt h1{   
-    font-family: 'Ubuntu Condensed', sans-serif;
-}
-
 .slideOpt h2{
     font-family: 'Ubuntu Condensed', sans-serif;
 }
@@ -60,16 +57,15 @@ ESCRITORIO MEDIANO O TABLET HORIZONTAL (MD revisamos en 1024px)
 
 @media (max-width:1199px) and (min-width:992px){
 
-   .slideOpt h1{           
-        font-size:35px; 
-        margin-top:5px;
-    }
-
    .slideOpt h2{           
         font-size:30px; 
     }
 
    .slideOpt h3{   
+        font-size:25px; 
+    }
+
+   .slideOpt h4{   
         font-size:20px; 
     }
 
@@ -85,18 +81,16 @@ ESCRITORIO PEQUEÑO O TABLET VERTICAL (SM revisamos en 768px)
 
 @media (max-width:991px) and (min-width:768px){
 
-
-   .slideOpt h1{           
-        font-size:25px; 
-        margin-top:5px;
-    }
-
    .slideOpt h2{           
-        font-size:20px; 
+        font-size:30px; 
     }
 
    .slideOpt h3{   
-        font-size:15px; 
+        font-size:25px; 
+    }
+
+   .slideOpt h4{   
+        font-size:20px; 
     }
 
    .slideOpt button{
@@ -111,26 +105,32 @@ MOVIL (XS revisamos en 320px)
 
 @media (max-width:767px){
 
-
-   .slideOpt h1{           
-        font-size:15px; 
-        margin-top:5px;
-        margin-bottom:-20px;
-    }
-
    .slideOpt h2{           
-        display:none;   
+        font-size:20px; 
+        margin-top:-5px;
     }
 
    .slideOpt h3{   
-        font-size:10px; 
-        margin-top:25px;
+        font-size:15px; 
+        margin-top:0px;
+    }
+
+   .slideOpt h4{   
+        display: none;
     }
 
    .slideOpt button{
+        margin-top: -10px;
         padding:5px;
         font-size:10px;
     }   
+
+    .jd-slider .controller{
+    background: rgba(0,0,0,.1);
+	position:  absolute;
+	bottom: -10px;
+	left: 0px;
+}
     
 }
 

@@ -42,7 +42,7 @@
             </div>
             <div class="p-2">
                 <a href="#" class="text-white">
-                    Crear una Cuenta
+                    Crear Cuenta
                 </a>
             </div>
         </div>      

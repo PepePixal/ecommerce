@@ -18,11 +18,10 @@ color: inherit !important;
     color: white;
 }
 
-.templateColor{
+.templateColor, .templateColor:hover{
     background: #47BAC1;
     color: white;
 }
-
 
 /* quita los triangulitos de menus y submenu */
 .dropdown-toggle::after {
