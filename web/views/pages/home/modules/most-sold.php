@@ -3,11 +3,11 @@
     <div class="container clearfix">
         <!-- btn-group agrupa los botones para posicionarlos con float-end -->
          <div class="btn-group float-end p-2">
-            <button class="btn btn-default">
+           <button class="btn btn-default btnView bg-white" attr-type="grid" attr-index="3">
                 <i class="fas fa-th fa-xs pe-1"></i>
                 <span class="float-end small mt-1">CUADRÍCULA</span>
             </button>
-            <button class="btn btn-default">
+            <button class="btn btn-default btnView" attr-type="list" attr-index="3">
                 <i class="fas fa-list fa-xs pe-1"></i>
                 <span class="float-end small mt-1">LISTA</span>
             </button>
@@ -18,7 +18,7 @@
         
         <div class="container">
             <div class="clearfix pt-3 pb-0 px-2">
-                <h3 class="float-start text-uppercase">Artículos más vendidos</h3>
+                <h4 class="float-start text-uppercase pt-2">Artículos más vendidos</h4>
                 <span class="float-end">
                     <a href="#" class="btn btn-default templateColor">
                         <small>VER MÁS <i class="fas fa-chevron-right"></i></small>
@@ -30,22 +30,22 @@
 
             <!-- GRID -->
             <!-- fila con 1 col disp móvil, 2 cols disp small, 4 cols disp medianos y superior  -->
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-3 pb-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-3 pb-4 grid-3">
                 
                 <!-- primera columna lg -->
                 <div class="col px-3 py-2 py-lg-0">
                     <a href="#">
                         <figure class="imgProduct">
-                            <img src="<?php echo $path; ?>views/assets/img/products/accesorios/1/accesorio01.jpg" class="img-fluid">
+                            <img src="<?php echo $path; ?>views/assets/img/products/cursos/1/curso01.jpg" class="img-fluid">
                         </figure>
-                        <h5><small class="text-uppercase text-muted">Collar de diamantes</small></h5>
+                        <h5><small class="text-uppercase text-muted">Curso PHP</small></h5>
                     </a>
                     <h6>
                         <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
                     </h6>
                     <div class="clearfix">
                         <h5 class="float-start text-uppercase text-muted">
-                            <del class="small" style="color:#bbb">29€</del> 11€
+                            <del class="small" style="color:#bbb">150€</del> 100€
                         </h5>
                         <div class="float-end">
                             <div class="btn-group btn-group-sm">
@@ -64,16 +64,16 @@
                 <div class="col px-3 py-2 py-lg-0">
                     <a href="#">
                         <figure class="imgProduct">
-                            <img src="<?php echo $path; ?>views/assets/img/products/accesorios/2/accesorio02.jpg" class="img-fluid">
+                            <img src="<?php echo $path; ?>views/assets/img/products/cursos/2/curso02.jpg" class="img-fluid">
                         </figure>
-                        <h5><small class="text-uppercase text-muted">Mochila deportiva</small></h5>
+                        <h5><small class="text-uppercase text-muted">Curso jQery</small></h5>
                     </a>
                     <h6>
                         <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
                     </h6>
                     <div class="clearfix">
                         <h5 class="float-start text-uppercase text-muted">
-                            <del class="small" style="color:#bbb">29€</del> 11€
+                            <del class="small" style="color:#bbb">150€</del> 100€
                         </h5>
                         <div class="float-end">
                             <div class="btn-group btn-group-sm">
@@ -92,16 +92,16 @@
                 <div class="col px-3 py-2 py-lg-0">
                     <a href="#">
                         <figure class="imgProduct">
-                            <img src="<?php echo $path; ?>views/assets/img/products/accesorios/3/accesorio03.jpg" class="img-fluid">
+                            <img src="<?php echo $path; ?>views/assets/img/products/cursos/3/curso03.jpg" class="img-fluid">
                         </figure>
-                        <h5><small class="text-uppercase text-muted">Mochila montaña</small></h5>
+                        <h5><small class="text-uppercase text-muted">Curso Bootstrap</small></h5>
                     </a>
                     <h6>
                         <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
                     </h6>
                     <div class="clearfix">
                         <h5 class="float-start text-uppercase text-muted">
-                            <del class="small" style="color:#bbb">29€</del> 11€
+                            <del class="small" style="color:#bbb">150€</del> 100€
                         </h5>
                         <div class="float-end">
                             <div class="btn-group btn-group-sm">
@@ -120,16 +120,16 @@
                 <div class="col px-3 py-2 py-lg-0">
                     <a href="#">
                         <figure class="imgProduct">
-                            <img src="<?php echo $path; ?>views/assets/img/products/accesorios/4/accesorio04.jpg" class="img-fluid">
+                            <img src="<?php echo $path; ?>views/assets/img/products/cursos/4/curso04.jpg" class="img-fluid">
                         </figure>
-                        <h5><small class="text-uppercase text-muted">Pulsera dorada</small></h5>
+                        <h5><small class="text-uppercase text-muted">Curso JavaScript</small></h5>
                     </a>
                     <h6>
                         <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
                     </h6>
                     <div class="clearfix">
                         <h5 class="float-start text-uppercase text-muted">
-                            <del class="small" style="color:#bbb">29€</del> 11€
+                            <del class="small" style="color:#bbb">150€</del> 100€
                         </h5>
                         <div class="float-end">
                             <div class="btn-group btn-group-sm">
@@ -145,6 +145,130 @@
                 </div>
 
             </div>
+
+            <!-- LISTA -->
+            <!-- Comienza oculta hasta que se pulse el botón LISTA -->
+            <div class="row list-3" style="display:none">
+
+                <!-- la class media de btstrp permite el contenido del div en una linea, de izq a derecha -->
+                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                    <figure class="imgProduct">
+                        <img src="<?php echo $path; ?>views/assets/img/products/cursos/1/curso01.jpg" class="img-fluid" style="width:150px">
+                    </figure>
+                    <!-- class media-body de btstrp, iguala la altura del elemento anterior (<figure>), con este div -->
+                    <div class="media-body ps-3">
+                        <h5><small class="text-uppercase text-muted">Curso PHP</small></h5>
+                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                        <p class="my-2">Descripción del producto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda pariatur perspiciatis beatae laudantium velit reiciendis nobis, sit amet nesciunt!.
+                        </p>
+                        <div class="clearfix">
+                            <h5 class="float-start text-uppercase text-muted">
+                                <del class="small" style="color:#bbb">150€</del> 100€
+                            </h5>
+                            <div class="float-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- la class media de btstrp permite el contenido del div en una linea, de izq a derecha -->
+                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                    <figure class="imgProduct">
+                        <img src="<?php echo $path; ?>views/assets/img/products/cursos/2/curso02.jpg" class="img-fluid" style="width:150px">
+                    </figure>
+                    <!-- class media-body de btstrp, iguala la altura del elemento anterior (<figure>), con este div -->
+                    <div class="media-body ps-3">
+                        <h5><small class="text-uppercase text-muted">Curso jQuery</small></h5>
+                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                        <p class="my-2">Descripción del producto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda pariatur perspiciatis beatae laudantium velit reiciendis nobis, sit amet nesciunt!.
+                        </p>
+                        <div class="clearfix">
+                            <h5 class="float-start text-uppercase text-muted">
+                                <del class="small" style="color:#bbb">150€</del> 100€
+                            </h5>
+                            <div class="float-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- la class media de btstrp permite el contenido del div en una linea, de izq a derecha -->
+                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                    <figure class="imgProduct">
+                        <img src="<?php echo $path; ?>views/assets/img/products/cursos/3/curso03.jpg" class="img-fluid" style="width:150px">
+                    </figure>
+                    <!-- class media-body de btstrp, iguala la altura del elemento anterior (<figure>), con este div -->
+                    <div class="media-body ps-3">
+                        <h5><small class="text-uppercase text-muted">Curso Bootstrap</small></h5>
+                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                        <p class="my-2">Descripción del producto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda pariatur perspiciatis beatae laudantium velit reiciendis nobis, sit amet nesciunt!.
+                        </p>
+                        <div class="clearfix">
+                            <h5 class="float-start text-uppercase text-muted">
+                                <del class="small" style="color:#bbb">150€</del> 100€
+                            </h5>
+                            <div class="float-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- la class media de btstrp permite el contenido del div en una linea, de izq a derecha -->
+                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                    <figure class="imgProduct">
+                        <img src="<?php echo $path; ?>views/assets/img/products/cursos/4/curso04.jpg" class="img-fluid" style="width:150px">
+                    </figure>
+                    <!-- class media-body de btstrp, iguala la altura del elemento anterior (<figure>), con este div -->
+                    <div class="media-body ps-3">
+                        <h5><small class="text-uppercase text-muted">Curso JavaScript</small></h5>
+                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                        <p class="my-2">Descripción del producto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda pariatur perspiciatis beatae laudantium velit reiciendis nobis, sit amet nesciunt!.
+                        </p>
+                        <div class="clearfix">
+                            <h5 class="float-start text-uppercase text-muted">
+                                <del class="small" style="color:#bbb">150€</del> 100€
+                            </h5>
+                            <div class="float-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-light border">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
     </div>
 </div>

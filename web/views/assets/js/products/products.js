@@ -1,7 +1,7 @@
 /*=============================================
-Grid & List
+Grid & List - Activa y desactiva CUADRICULA Y LIASTADO
 =============================================*/
-
+//cuando click sobre el elemento con class .btnView del dom, ejecuta función
 $(document).on("click",".btnView", function(){
 
 	var type = $(this).attr("attr-type");

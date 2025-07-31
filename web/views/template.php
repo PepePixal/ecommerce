@@ -53,7 +53,8 @@ $path = TemplateController::path();
 <!-- REQUIRED SCRIPTS -->
 <!-- AdminLTE App -->
 <script src="<?php echo $path ?>views/assets/js/plugins/adminlte/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="../../dist/js/demo.js"></script> -->
+<!-- scripts personalizados -->
+<script src="<?php echo $path ?>views/assets/js/products/products.js"></script>
+
 </body>
 </html>
