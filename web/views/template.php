@@ -37,6 +37,8 @@ $path = TemplateController::path();
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- JDS Slider JS -->
   <script src="<?php echo $path ?>views/assets/js/plugins/jdSlider/jdSlider.js"></script>
+  <!-- Kanob plugin de la plantilla adminlite, para graficos visits.php -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/knob/knob.js"></script>
 
 </head>
 <body class="hold-transition sidebar-collapse layout-top-nav">
