@@ -1,0 +1,29 @@
+
+id_template:
+	
+logo_template:		logo.png
+
+icon_template:		icono.png
+
+cover_template:		cover.png
+
+title_template: 	Sistema Ecommerce
+
+description_template: 	Descripción larga del sistema Ecommerce, donde se describen las características principales del sistema ecommerce, así como sus objetivos.
+
+//Almacenados como texto que representa un arreglo indexado. En php se reconvertirá de texto a arreglo real.
+
+keywords_template:	["ecommerce","comercio electrónico","moda","cursos"]
+
+//Almacenados como texto que representa un objeto. En php se reconvertirá de texto a objeto real.
+//Los <link> html a google.fonts, están codificadas con la herramienta online https://www.urlencoder.org, para poder almacenarlos en la BD, sin problemas de carácteres especiales, comillas, etc. En php se decodificaran para obtener los <link> originales. 
+
+fonts_template:		{"fontFamily":"%3Clink%20rel%3D%22preconnect%22%20href%3D%22https%3A%2F%2Ffonts.googleapis.com%22%3E%0A%20%20%3Clink%20rel%3D%22preconnect%22%20href%3D%22https%3A%2F%2Ffonts.gstatic.com%22%20crossorigin%3E%0A%20%20%3Clink%20href%3D%22https%3A%2F%2Ffonts.googleapis.com%2Fcss2%3Ffamily%3DUbuntu%2BCondensed%26family%3DUbuntu%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C500%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C700%26display%3Dswap%22%20rel%3D%22stylesheet%22%3E","fontBody":"Ubuntu","fontSlide":"Ubuntu Condensed"}	
+
+//Almacenados como texto que representa un objeto JSON. En php se reconvertirá de texto a objeto JSON real.
+
+colors_template:	[{"top":{"background":"black"},{"color":"white"}},{"template":{"background":"#47BAC1"},{"color":"white"}}]
+
+data_created_template:	2025-08-01
+
+data_updated_template:

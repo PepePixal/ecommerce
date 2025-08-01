@@ -6,8 +6,8 @@
     en dispositivo lg (large) ocupa 2 columnas de 12, margin top 1 -->
     <div class="col-12 col-lg-2 mt-1">
       <div class="d-flex justify-content-center">
-        <a href="../../index3.html" class="navbar-brand">
-          <img src="<?php echo $path ?>views/assets/img/template/logo.png" alt="logo" class="brand-image img-fluid py-3 px-5 p-lg-0 pe-lg-3">
+        <a href="<?php echo $path ?>" class="navbar-brand">
+          <img src="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template?>/<?php echo $template->logo_template?>" alt="logo" class="brand-image img-fluid py-3 px-5 p-lg-0 pe-lg-3">
         </a>
       </div>
     </div>
