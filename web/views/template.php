@@ -2,11 +2,16 @@
 //obtiene el path con el método static path() y lo asigna a la var $path
 $path = TemplateController::path();
 
-//Solicitud GET para obtener info de la tabla templates, de la BD,
-//con la url se filtra para traer solo el registro, cuya columna active_template contenga el valor ok
+/*=============================================
+Obtener datos de las plantillas, de la BD
+==============================================*/
+
+//Define vars para enviar como arguementos al metodo request(), solicitud a la tabla de la BD.
+//Con la url se filtra para traer solo el registro, cuya columna active_template contenga el valor ok
 $url = "templates?linkTo=active_template&equalTo=ok";
 $method = "GET";
 $fields = array();
+
 //llama método static request(), enviando parámetros, que retornará un JSON 
 $template = CurlController::request($url,$method,$fields);
 
