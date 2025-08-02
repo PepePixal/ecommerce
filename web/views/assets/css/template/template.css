@@ -10,16 +10,6 @@ text-decoration: none !important;
 color: inherit !important;
 }
 
-.topColor{
-    background-color: black;
-    color: white;
-}
-
-.templateColor, .templateColor:hover, a.templateColor{
-    background: #47BAC1;
-    color: white !important;
-}
-
 /* quita los triangulitos de menus y submenu */
 .dropdown-toggle::after {
     display: none !important;

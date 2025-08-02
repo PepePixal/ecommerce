@@ -22,26 +22,26 @@ if ($template->status == 200){
 }
 
 /*======================================================
-Formateo del arreglo almacenado en keywords_template
+Formateo de arrglo en cadena de texto json, a arreglo php
 ========================================================*/
 //define var $keywords, para almacenar las palabras clave
 $keywords = null;
-//Decodifica el string del json, a formato arreglo index (por el true), para php
-//recorre el arreglo index decodificado y por cada valor de cada llave:
+//Decodifica el string json, a formato arreglo asociativo php (por el true),
+//recorre el arreglo index decodificado y por el valor de cada llave:
 foreach (json_decode($template->keywords_template, true) as $key => $value) {
-  //le concatena a cada valor, una coma y un espacio (", ") al final de cada valor,
+  //le concatena a cada valor, una coma y un espacio (", ") al final,
   //obteniendo un string con las palabras clave, separados por comas, lo asigna a $keywords
   $keywords .= $value.", "; 
 }
-//sustrae, enpezando desde el final 0, el útimo espacio y la última coma (-2),
-//con la función php substr(), sanitizando así el string para su uso
+//la función php substr(), extrae, enpezando desde el final 0, los dos últimos carácteres -2 de la cadena,
+//el útimo espacio y la última coma, sanitizando así el string para su uso
 $keywords = substr($keywords, 0, -2); 
 
 /*======================================================
-Formateo del objeto almacenado en keywords_template
+Formateo de objeto en cadena de texto json, a Objeto php
 ========================================================*/
-//decodifica el string json de fonts_template a un objeto, y otiene el valor del atributo fontFamily,
-//que es un string con <link> html a la url de google.fonts, codificado 
+//decodifica el string json de fonts_template a un objeto php y obtiene el valor del atributo fontFamily,
+//que es un string con <link> html a la url de google.fonts, codificado
 $fontFamily = json_decode($template->fonts_template)->fontFamily;
 //decodifica el string al fomato html <link> url, original
 $fontFamily = urldecode($fontFamily);
@@ -52,6 +52,16 @@ $fontBody = json_decode($template->fonts_template)->fontBody;
 //decodifica el string json de fonts_template a un objeto, y otiene el valor del atributo fontSlide,
 //que es un string con <link> html a la url de google.fonts, codificado 
 $fontSlide = json_decode($template->fonts_template)->fontSlide;
+
+/*===========================================================
+Formateo de objeto json en cadena de texto, a objeto json php
+=============================================================*/
+//decodifica el string json a ojeto json y
+//obtiene el valor de la propidad top, del indice [0] del arreglo json
+$topColor = json_decode($template->colors_template)[0]->top;
+//decodifica el string json a ojeto json y
+//obtiene el valor de la propidad template, del indice [1] del arreglo json
+$templateColor = json_decode($template->colors_template)[1]->template;
 
 ?>
 
@@ -89,11 +99,21 @@ $fontSlide = json_decode($template->fonts_template)->fontSlide;
   <!-- estilo css, con variables con info de la DB, personalizado para template.php -->
   <style>
       body{
-      font-family: <?php echo $fontBody ?>, sans-serif; 
+        font-family: <?php echo $fontBody ?>, sans-serif; 
       }
 
       .slideOpt h2, .slideOpt h3, .slideOpt h4{
-          font-family: <?php echo $fontSlide ?>, sans-serif;
+        font-family: <?php echo $fontSlide ?>, sans-serif;
+      }
+
+      .topColor{
+        background-color: <?php echo $topColor->background ?>;
+        color: <?php echo $topColor->color ?>;
+      }
+
+      .templateColor, .templateColor:hover, a.templateColor{
+        background: <?php echo $templateColor->background ?> !important;
+        color: <?php echo $templateColor->color ?> !important;
       }
   </style>
 
