@@ -17,7 +17,15 @@
     margin top 1, padding 3 a todo en disp. pequeños, padding 0 en dispositivos lg (large) -->
     <div class="col-12 col-lg-7 col-xl-8 mt-1 px-lg-0">
       <div class="d-flex justify-content-start">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+
+        <!-- mostrar el botón que activa el slider lateral de administración, solo si un admin está logueado -->
+        <?php 
+        if (isset($_SESSION["admin"])): ?>
+          
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+           
+        <?php endif ?>
+
         <div class="dropdown px-1 templateColor" >
           <a id="dropdownSubMenu1" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-uppercase">
             <span class="d-lg-block d-none">Categorias<i class="ps-lg-2 fas fa-th-list"></i></span>

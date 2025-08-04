@@ -1,9 +1,40 @@
-<?php 
-//obtiene el path con el método static path() y lo asigna a la var $path
+<?php
+/*====================================================
+Iniciar variables de sesión
+=====================================================*/
+//Activa el output buffering
+ob_start();
+//Inicializa session data
+session_start();
+
+/*====================================================
+Variable Path - Obtiene el path con el método static path()
+=====================================================*/
+
 $path = TemplateController::path();
 
+/*====================================================
+Capturar las rutas de la URL, descartando el arguemto
+=====================================================*/
+//obtiene la parte de la URL que va despues del dominio (string), de la llave ["REQUEST_URI"], del arreglo super glob $_SERVER.
+//explode() divide el string obtenido (URL) en un arreglo index, tomando como separador "/" y lo almacena como arreglo index en $routeArray
+$routesArray = explode("/", $_SERVER["REQUEST_URI"]);
+//como en el arreglo creado, el primer elemento siempre será un string vacio (la parte del dominio de la url),
+//array_shift() elimina el primer indice, [0] que no contiene información, del arreglo index $routerArray y lo reindexa
+array_shift($routesArray);
+
+//para descartar la parte de argumento (?var=...) que puede venir en la URL,
+//recorre el arreglo index $routeArray y al valor ($value) de cada llave ($key):
+foreach ($routesArray as $key => $value) {
+  //separa cada grupo de carácteres, tomando como separador "?", genera un nuevo arreglo idex y
+  //obtiene solo el valor de la llave [0], del arreglo generado,
+  //reasigna el valor al correspondiente indice ($key) del arreglo index $routesArray
+  $routesArray[$key] = explode("?", $value)[0]; 
+
+}
+
 /*=============================================
-Obtener datos de las plantillas, de la BD
+Obtener datos de la tabla plantillas, de la BD
 ==============================================*/
 
 //Define vars para enviar como arguementos al metodo request(), solicitud a la tabla de la BD.
@@ -122,7 +153,6 @@ $templateColor = json_decode($template->colors_template)[1]->template;
       }
   </style>
 
-
   <!-- *** JS ***  -->
   <!-- jQuery -->
   <script src="<?php echo $path ?>views/assets/js/plugins/jquery/jquery.min.js"></script>
@@ -134,13 +164,32 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <script src="<?php echo $path ?>views/assets/js/plugins/knob/knob.js"></script>
 
 </head>
+
 <body class="hold-transition sidebar-collapse layout-top-nav">
   <div class="wrapper">
     <?php
       include "modules/top.php";
       include "modules/navbar.php";
-      include "modules/sidebar.php"; 
-      include "pages/home/home.php";
+
+      //Para mostrar el sidebar lateral de administración,
+      //valida si existe y no es NULL la var ["admin"] en la super glob $_SESSION
+      if (isset($_SESSION["admin"])) {
+        include "modules/sidebar.php";
+      }
+      
+      //valida si el index 0 de $routesArray[0] NO viene vacio, significa que contiene una URL
+      if (!empty($routesArray[0])) {
+        //valida si el valor del indice [0] del arreglo $routesArray es = "admin",
+        if ($routesArray[0] == "admin") {
+          //incluye (iserta) admin.php en template.php
+          include "pages/admin/admin.php";
+        } 
+      //si $routesArray viene vacio
+      } else {
+        //incluye (inserta) home.php en template.php
+        include "pages/home/home.php";
+      }
+
       include "modules/footer.php";
     ?>
   </div>
