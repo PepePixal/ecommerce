@@ -179,11 +179,15 @@ $templateColor = json_decode($template->colors_template)[1]->template;
       
       //valida si el index 0 de $routesArray[0] NO viene vacio, significa que contiene una URL
       if (!empty($routesArray[0])) {
-        //valida si el valor del indice [0] del arreglo $routesArray es = "admin",
-        if ($routesArray[0] == "admin") {
-          //incluye (iserta) admin.php en template.php
-          include "pages/admin/admin.php";
-        } 
+
+        //valida si el valor del indice [0] del arreglo $routesArray es = "admin" o
+        // el valor del indice [0] del arreglo $routesArray es = "salir"
+        if ($routesArray[0] == "admin" || $routesArray[0] == "salir") {
+
+          //incluye (iserta) la ruta correspondiente 
+          include "pages/".$routesArray[0]."/".$routesArray[0].".php";
+        }
+
       //si $routesArray viene vacio
       } else {
         //incluye (inserta) home.php en template.php

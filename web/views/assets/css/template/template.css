@@ -43,3 +43,12 @@ color: inherit !important;
 .text-twitch{
     color: #A142F7;
 }
+
+/* Sidebar */
+[class*=sidebar-dark-] .sidebar a {
+    color: #c2c7d0 !important;
+}
+
+[class*=sidebar-dark] .brand-link, [class*=sidebar-dark] .brand-link .pushmenu {
+    color: rgba(255,255,255,.8) !important;
+}
