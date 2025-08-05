@@ -124,8 +124,14 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/fontawesome-free/css/all.min.css">
   <!-- Latest compiled and minified CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- JDS Slider CSS -->
+  <!-- JDS Slider plugin CSS -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/jdSlider/jdSlider.css">
+  <!-- Notie Alert plugin CSS -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/notie/notie.min.css">
+  <!-- Toastr Alert plugin CSS -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/toastr/toastr.min.css">
+  <!-- Material Preloader plugin CSS -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
   <!-- CSS personalizado -->
@@ -162,7 +168,16 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <script src="<?php echo $path ?>views/assets/js/plugins/jdSlider/jdSlider.js"></script>
   <!-- Kanob plugin de la plantilla adminlite, para graficos visits.php -->
   <script src="<?php echo $path ?>views/assets/js/plugins/knob/knob.js"></script>
-
+  <!-- Notie Alert plugin alertas -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/notie/notie.min.js"></script>
+  <!-- Sweet Alert 2 plugin alertas -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+  <!-- Toastr plugin alertas -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/toastr/toastr.min.js"></script>
+  <!-- Material Preloader plugin loader -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/material-preloader/material-preloader.js"></script>
+  <!-- Alertas Personalizado -->
+  <script src="<?php echo $path ?>views/assets/js/alerts/alerts.js"></script>
 </head>
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
