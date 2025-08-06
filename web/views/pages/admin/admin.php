@@ -18,4 +18,6 @@ if (!isset($_SESSION["admin"])) {
 
 ?>
 
+<!-- para la validación del fomrulario con bootstrap -->
+<script src="<?php echo $path ?>views/assets/js/forms/forms.js"></script>
 

@@ -6,22 +6,45 @@
                 <h3><b>Administradores</b></h3>
             </div>
             <div class="card-body">
-                <form method="post">
+
+                <!-- la class ned-validated es para la validación del formulario con bootstrap,
+                 novalidate para que no tenga en cuenta la validación por defecto de html -->
+                <form method="post" class="needs-validation" novalidate>
                     <div class="input-group mb-3">
-                        <input type="email" name="loginAdminEmail" class="form-control" placeholder="Email">
+                        <input
+                         onchange="validateJS(event, 'email')" 
+                         type="email"
+                         name="loginAdminEmail"
+                         class="form-control"
+                         placeholder="Email"
+                         required
+                        >
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+                        <!-- Validacion de formulario con bootstrap -->
+                        <div class="valid-feedback">Válido</div>
+                        <div class="invalid-feedback">Completa este campo.</div>
                     </div>
+
                     <div class="input-group mb-3">
-                        <input type="password" name="loginAdminPass" class="form-control" placeholder="Password">
+                        <input
+                         type="password"
+                         name="loginAdminPass"
+                         class="form-control"
+                         placeholder="Password"
+                         required
+                        >
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        <!-- Validacion de formulario con bootstrap -->
+                        <div class="valid-feedback">Válido</div>
+                        <div class="invalid-feedback">Completa este campo.</div>
                     </div>
                     <div class="row">
                         <div class="col-8">
