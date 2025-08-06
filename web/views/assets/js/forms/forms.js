@@ -47,3 +47,57 @@ function validateJS(event, type){
   } 
 
 }
+
+
+/*==============================================================
+  Recordar el email, en el form login administradores
+===============================================================*/
+
+//Función que genera y elimina la var emailAdmin, del local storage, según esta chequeado Recordar del form. 
+//requiere parámetro event, value del element (input) que origina el event (onchange) 
+function rememberEmail(event){
+
+  //valida si el valor checked, del elemento input que origina el evento onchange, es true
+  if(event.target.checked){
+    //genera la variable local emailAdmin, en el navegador. (navegador inspeccionar/Aplicación/Almacenamiento local/dominio)
+    //le asigna el value del input email del formulario, cuya propiedad name es loginAdminEmail 
+    localStorage.setItem("emailAdmin", $('[name="loginAdminEmail"]').val());
+    //genera var local checkRem, en el navegador y le asigna true
+    localStorage.setItem("checkRem", true);
+
+  //si el checked no es true, es que no está seleccionado
+  }  else {
+
+    //elimina las variable locales emailAdmin y checkRem, del navegador.
+    localStorage.removeItem("emailAdmin");
+    localStorage.removeItem("checkRem");
+
+  }
+
+}
+
+/*==============================================================
+  Captura email del local sotrage
+===============================================================*/
+//captura, si existe, la var email del local Storage, para asignarla al value del form login amin
+function getEmail(){
+  // valida si el valor de la var emailAdmin del localSotrage, no es null 
+  if(localStorage.getItem("emailAdmin") != null){
+
+    //asigna al value (.val) del input del form, el valor de la var del localStorage (el email)
+    $('[name="loginAdminEmail"]').val(localStorage.getItem("emailAdmin"));
+
+  }
+
+  //valida si la var checkRem del localStorage, no es null y contiene algun valor
+  if(localStorage.getItem("checkRem") != null && localStorage.getItem("checkRem")){
+
+      //asigana true, al atributo "checked" del elemento cuyo id es "remember", para matener el check 
+      $("#remember").attr("checked", true);
+  }
+}
+
+//ejecuta la función getEmail(), a la carga del archivo forms.js
+getEmail();
+
+
