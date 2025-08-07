@@ -79,7 +79,7 @@
                 </form>
 
                 <p class="mb-1">
-                    <a href="forgot-password.html">Recordar cronraeña</a>
+                    <a href="#resetPassword" data-bs-toggle="modal">Recuperar contraseña</a>
                 </p>
             </div>
             <!-- /.card-body -->
@@ -87,5 +87,65 @@
         <!-- /.card -->
     </div>
     <!-- /.login-box -->
+</div>
 
+
+<!-- Ventana modal - Restablecer contraseña -->
+<div class="modal" id="resetPassword">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Restablecer contraseña</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puedes restablecerla.</p>
+        <form method="post">
+            <div class="input-group mb-3">
+                        <input
+                         onchange="validateJS(event, 'email')" 
+                         type="email"
+                         name="resetPassword"
+                         class="form-control"
+                         placeholder="Email"
+                         required
+                        >
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        <!-- Validacion de formulario con bootstrap -->
+                        <div class="valid-feedback">Válido</div>
+                        <div class="invalid-feedback">Completa este campo.</div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-default templateColor btn-block py-2">Solicitar nueva contraseña</button>
+                </div>
+            </div>
+
+            <?php
+                //requiere el archivo admins.controllers.php
+                require_once "controllers/admins.controller.php";
+                //objeto $reset con nueva instancia de la class AdminsController():
+                $reset = new AdminsController();
+                //llama al método resetPassword() de la class AdminsController()
+                $reset -> resetPassword();
+            ?>
+
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+
+    </div>
+  </div>
 </div>

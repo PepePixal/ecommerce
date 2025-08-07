@@ -10,3 +10,7 @@ function debug($data = '', $detener = true)
             exit;
         }
 }
+
+function eco($var){
+    echo '<pre>'; print_r($var); echo '</pre>';
+}

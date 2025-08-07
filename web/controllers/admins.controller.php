@@ -3,7 +3,7 @@
 class AdminsController {
 
     /*===================================
-    Login de administradores
+      Login de administradores
     ====================================*/
     public function login(){
 
@@ -90,6 +90,87 @@ class AdminsController {
                     </script>
                 ';
 
+            }
+
+        }
+
+    }
+
+
+    /*===================================
+      Recuperar Contraseña
+    ====================================*/
+    public function resetPassword() {
+
+        //valida si la var resetPassword que viene del form, está declarada y no es null
+        if(isset($_POST["resetPassword"])){
+             
+            //valida la sintaxis del valor de la var resetPassword, formato email válido
+            if(preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $_POST["resetPassword"])) {
+
+                    /*=========================================================
+                      Consultar si el email (usuario) está registrado en la BD
+                    ===========================================================*/
+                    //Defie los parámentros para la consulta GET a la api.
+                    //En la tabla admins, en la columna email_admin, busca si hay algun registro cuyo valor
+                    //sea igual al valor de la var $_POST["resetPassword"],
+                    //si lo hay, obten únicamente el valor de la columna id_admin
+                    $url = "admins?linkTo=email_admin&&equalTo=".$_POST["resetPassword"]."&select=id_admin";
+                    $method = "GET";
+                    $fields = array();
+                    
+                    //llama al método request() enviando argumentos
+                    $admin = CurlController::request($url, $method, $fields);
+                    
+                    //valida, si la propiedad status es = 200, existe el correo en la tabla admins de BD
+                    if($admin->status == 200){
+                        //funcion q genera una contraseña aleatória de $length carácteres, basada en $chain, 
+                        function genPassword($length){
+                            //define vars
+                            $password = "";
+                            $chain = "0123456789abcdefghijklmnopqrstuvwxyz";
+                            //str_shuffle() desordena el string inventado $chain,
+                            //substr() sustrae del string desordenado, empezando por la posición 0,
+                            //la cantidad de carácteres $length.
+                            $password = substr(str_shuffle($chain), 0, $length);
+                            return $password;
+                        }
+
+                        //llama genPassword() enviando cantidad de carácteres a sustraer
+                        $newPassword = genPassword(11);
+
+                        //encripta la nueva password, con el mismo hash que utiliza la api (post.controller.php),
+                        //para encriptar la password, de los neuevos usuario, antes de guardarlas en la BD
+                        $crypt = crypt($newPassword, '$2a$07$azybxcags23425sdg23sdfhsd$');
+                        
+                        
+                        /*=========================================================
+                        Actualizar la nueva contraseña del usuario, en la BD
+                        ===========================================================*/
+                        //define parámetros para la request PUT, siguiendo la documentación de la api,
+                        //en la sección CREAR O EDITAR UN REGISTRO CON EXCEPCIÓN
+                        $url = "admins?id=".$admin->results[0]->id_admin."&nameId=id_admin&token=no&except=password_admin";
+                        $method = "PUT";
+                        $fields = "password_admin=".$crypt;
+                        
+                        //llama func request() enviando params
+                        $updatePassword = CurlController::request($url, $method, $fields);
+                        
+                        if($updatePassword->status == 200){
+                            eco($newPassword);
+                            eco($crypt);
+                        } else {
+                            
+                        }
+
+                    //si no es = 200, el correo no existe en la BD de admins de la BD
+                    } else {
+                        echo '<script>
+                                fncFormatInputs();
+                                fncNotie("error", "El correo no existe");
+                            </script>
+                        ';
+                    }
             }
 
         }
