@@ -10,11 +10,12 @@ class AdminsController {
         //valida si en $_POST existe y no es nula, la var "loginAdminEmail" del form login admin
         if(isset($_POST["loginAdminEmail"])) {
 
-             /*=========================================
+            /*=========================================
                 carga plugin Preloader
             =========================================*/
             echo '<script>
                 fncMatPreloader("on");
+                fncSweetAlert("loading", "", "");
             </script>';
 
             /*=======================================
@@ -104,6 +105,14 @@ class AdminsController {
 
         //valida si la var resetPassword que viene del form, está declarada y no es null
         if(isset($_POST["resetPassword"])){
+
+            /*=========================================
+                carga plugin Preloader
+            =========================================*/
+            echo '<script>
+                fncMatPreloader("on");
+                fncSweetAlert("loading", "", "");
+            </script>';
              
             //valida la sintaxis del valor de la var resetPassword, formato email válido
             if(preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $_POST["resetPassword"])) {
@@ -153,13 +162,54 @@ class AdminsController {
                         $method = "PUT";
                         $fields = "password_admin=".$crypt;
                         
-                        //llama func request() enviando params
+                        //llama func request() enviando params, instanciando la class
                         $updatePassword = CurlController::request($url, $method, $fields);
                         
                         if($updatePassword->status == 200){
-                            eco($newPassword);
-                            eco($crypt);
-                        } else {
+                        
+                            //Definición de parámetros para enviar al método sendEmail()
+                            //asunto del email
+                            $subject = "Envio de nueva contraseña, desde Ecommerce";
+                            //destinatario del email, obtenido del $_POST del form restablecer password
+                            $email = $_POST["resetPassword"];
+                            //contenido html del email
+                            $message = "Su nueva contraseña: ".$newPassword;
+                            //enlace que retorne a la página ecommerce.com/admin
+                            $link = TemplateController::path().'admin';
+
+                            //llama func sendEmail() enviando params, instanciando su class. Retorna string.
+                            $sendEmail = TemplateController::sendEmail($subject, $email, $message, $link);
+
+                            //valida si el resultado del envio es "ok"
+                            if ($sendEmail == "ok") {
+                                echo '
+                                    <script>
+                                        fncFormatInputs();
+                                        fncMatPreloader("off");
+
+                                        // fncNotie("success", "Su nueva contraseña ha sido enviada. Revise la carpeta de spam");
+                                        // fncSweetAlert("success", "Su nueva contraseña ha sido enviada. Revise la carpeta de spam", "");
+                                        fncToastr("success", "Su nueva contraseña ha sido enviada. Revise la carpeta de spam" );
+                                    </script>
+                                ';
+
+                            //si el resultado del envio NO ha sido "ok"
+                            } else {
+                                echo '
+                                    <script>
+                                        fncFormatInputs();
+                                        fncMatPreloader("off");
+
+                                        fncNotie("error", "'.$sendEmail.'");
+                                        // fncSweetAlert("error", "'.$sendEmail.'", "");
+                                        // fncToastr("error", "'.$sendEmail.'" );
+                                    </script>
+                                ';
+
+                            }
+
+
+
                             
                         }
 

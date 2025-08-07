@@ -14,7 +14,9 @@ Requires
 require_once "controllers/template.controller.php";
 require_once "controllers/curl.controller.php";
 //incluye, una sola vez, la class libs/Helper.php
-require_once("controllers/helper.php");
+require_once "controllers/helper.php";
+//Load Composer's autoloader (created by composer, not included with PHPMailer)
+require_once "extensions/vendor/autoload.php";
 
 /*=====================================
 Template - Plantilla
