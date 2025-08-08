@@ -52,3 +52,7 @@ color: inherit !important;
 [class*=sidebar-dark] .brand-link, [class*=sidebar-dark] .brand-link .pushmenu {
     color: rgba(255,255,255,.8) !important;
 }
+
+.page-error{
+    height: 50vh !important;
+}

@@ -197,10 +197,17 @@ $templateColor = json_decode($template->colors_template)[1]->template;
 
         //valida si el valor del indice [0] del arreglo $routesArray es = "admin" o
         // el valor del indice [0] del arreglo $routesArray es = "salir"
-        if ($routesArray[0] == "admin" || $routesArray[0] == "salir") {
+        if ($routesArray[0] == "admin" ||
+            $routesArray[0] == "salir") {
 
           //incluye (iserta) la ruta correspondiente 
           include "pages/".$routesArray[0]."/".$routesArray[0].".php";
+        
+        //si no existe la url
+        } else {
+
+          include "pages/404/404.php";
+        
         }
 
       //si $routesArray viene vacio
