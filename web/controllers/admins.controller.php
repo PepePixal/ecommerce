@@ -90,7 +90,6 @@ class AdminsController {
                         fncFormatInputs();
                     </script>
                 ';
-
             }
 
         }
@@ -172,13 +171,16 @@ class AdminsController {
                             $subject = "Envio de nueva contraseña, desde Ecommerce";
                             //destinatario del email, obtenido del $_POST del form restablecer password
                             $email = $_POST["resetPassword"];
+                            //titulo para la plantilla
+                            $title = "SOLICITUD DE NUEVA CONTRAEÑA";
                             //contenido html del email
-                            $message = "Su nueva contraseña: ".$newPassword;
+                            $message = '<h4 style="font-weight: 100; color: #999; padding: 0px 20px;"><strong>Su nueva contraseña: '.$newPassword.'</strong></h4>
+                            <h4 style="font-weight: 100; color: #999; padding: 0px 20px;">Acceda nuevamente al sitio con esta contraseña y recuerde cambiarla en el panel de perfil de usuario.</h4>';
                             //enlace que retorne a la página ecommerce.com/admin
                             $link = TemplateController::path().'admin';
 
                             //llama func sendEmail() enviando params, instanciando su class. Retorna string.
-                            $sendEmail = TemplateController::sendEmail($subject, $email, $message, $link);
+                            $sendEmail = TemplateController::sendEmail($subject, $email, $title ,$message, $link);
 
                             //valida si el resultado del envio es "ok"
                             if ($sendEmail == "ok") {
@@ -205,18 +207,14 @@ class AdminsController {
                                         // fncToastr("error", "'.$sendEmail.'" );
                                     </script>
                                 ';
-
                             }
-
-
-
-                            
                         }
 
                     //si no es = 200, el correo no existe en la BD de admins de la BD
                     } else {
                         echo '<script>
                                 fncFormatInputs();
+                                fncMatPreloader("off");
                                 fncNotie("error", "El correo no existe");
                             </script>
                         ';
