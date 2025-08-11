@@ -6,7 +6,8 @@
                 <div class="error-content">
                     <h3><i class="fas fa-exclamation-triangle txt-default templateColor"></i> Oops! Error de Servidor.</h3>
                     <p>
-                        Estamos trabajando en ello, para que puedas regresar lo antes posible.
+                        Estamos trabajando en ello, para que puedas regresar lo antes posible.</br>
+                    </a>
                     </p>
                 </div>
             </div>

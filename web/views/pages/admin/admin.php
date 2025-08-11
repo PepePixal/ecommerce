@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/admin/admin.css">
 
-
 <?php
 //valida si todavía NO esxiste la var ["admin"] en el arreglo super glob $_SESSION,
 //significa que no hay un admin logueado
@@ -35,6 +34,13 @@ if (!isset($_SESSION["admin"])) {
           //inserta en admin.php, el correspondiente archivo .php, según la segunda parte de la url
           include $routesArray[1]."/".$routesArray[1].".php";
 
+      } else {
+
+        //envia a la url ecommerce.com/404/, como no existe, desde template.php se ejecuta el include 404
+        echo '<script>
+          window.location = "'.$path.'404"
+        </script>';
+      
       }
 
   //si no hay una segunda parte en la url, se queda en /admin/

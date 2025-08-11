@@ -7,9 +7,9 @@ ob_start();
 //Inicializa session data
 session_start();
 
-/*====================================================
+/*==========================================================
 Variable Path - Obtiene el path con el método static path()
-=====================================================*/
+===========================================================*/
 
 $path = TemplateController::path();
 
@@ -52,9 +52,25 @@ if ($template->status == 200){
   // y lo reasigna a la var $template
   $template = $template->results[0];
   
+//si la conexión con la api no ha sido ok
 } else {
-  debug("Error al conectar con la api");
-  //redireccionar a página 500
+    //como aquí todavía no se ha cargado nada del dom, para mostrar la página de error 500:
+    echo '<!DOCUTYPE html>
+          <html lang="es">
+            <head>
+              <link rel="stylesheet" href="'.$path.'views/assets/css/plugins/adminlte/adminlte.min.css">
+            </head>
+            <body class="hold-transition sidebar-collapse layout-top-nav">
+              <div class="wrapper">
+    ';
+              include "pages/500/500.php";
+      echo '  </div>  
+            </body>
+          </html>
+    ';
+
+    //para el código aquí
+    return;
 }
 
 /*======================================================
