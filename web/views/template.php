@@ -148,6 +148,11 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/toastr/toastr.min.css">
   <!-- Material Preloader plugin CSS -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
+  <!-- DataTables plugin LTE -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
   <!-- CSS personalizado -->
@@ -192,11 +197,30 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <script src="<?php echo $path ?>views/assets/js/plugins/toastr/toastr.min.js"></script>
   <!-- Material Preloader plugin loader -->
   <script src="<?php echo $path ?>views/assets/js/plugins/material-preloader/material-preloader.js"></script>
+  
+  <!-- DataTables Plugins - LTE -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/jszip/jszip.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  
   <!-- Alertas Personalizado -->
   <script src="<?php echo $path ?>views/assets/js/alerts/alerts.js"></script>
 </head>
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
+
+  <!-- input oculto solo para obtener el $path de su value, desde tables.js -->
+  <input type="hidden" id="urlPath" value="<?php echo $path ?>">
+
   <div class="wrapper">
     <?php
       include "modules/top.php";

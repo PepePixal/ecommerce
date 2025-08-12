@@ -57,3 +57,6 @@ if (!isset($_SESSION["admin"])) {
 <!-- para la validación del fomrulario con bootstrap -->
 <script src="<?php echo $path ?>views/assets/js/forms/forms.js"></script>
 
+<!-- para usar el plugin DataTables en las tablas -->
+<script src="<?php echo $path ?>views/assets/js/tables/tables.js"></script>
+
