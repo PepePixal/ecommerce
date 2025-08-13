@@ -16,19 +16,22 @@ $path = TemplateController::path();
 /*====================================================
 Capturar las rutas de la URL, descartando el arguemto
 =====================================================*/
-//obtiene la parte de la URL que va despues del dominio (string), de la llave ["REQUEST_URI"], del arreglo super glob $_SERVER.
-//explode() divide el string obtenido (URL) en un arreglo index, tomando como separador "/" y lo almacena como arreglo index en $routeArray
+
+//La llave ["REQUEST_URI"], contiene un string con el path (o ruta) de la url de la página, solo la parte posterior al dominio (/admin/...)
+//explode() divide el string (path o ruta) en un arreglo index, tomando como separador "/" y lo almacena como arreglo index en $routeArray
 $routesArray = explode("/", $_SERVER["REQUEST_URI"]);
-//como en el arreglo creado, el primer elemento siempre será un string vacio (la parte del dominio de la url),
-//array_shift() elimina el primer indice, [0] que no contiene información, del arreglo index $routerArray y lo reindexa
+//como en el arreglo creado, el primer elemento [0] siempre será un string vacio (la parte anterior a la primera / ),
+//con array_shift() se elimina el primer elemento [0], que no contiene información, del arreglo index $routerArray y lo reindexa
 array_shift($routesArray);
 
-//para descartar la parte de argumento (?var=...) que puede venir en la URL,
+//para descartar la parte de argumento ( ?var=... ) que puede venir en la URL,
 //recorre el arreglo index $routeArray y al valor ($value) de cada llave ($key):
 foreach ($routesArray as $key => $value) {
-  //separa cada grupo de carácteres, tomando como separador "?", genera un nuevo arreglo idex y
-  //obtiene solo el valor de la llave [0], del arreglo generado,
-  //reasigna el valor al correspondiente indice ($key) del arreglo index $routesArray
+
+  //explode() divide el string, tomando como separador "?", genera un nuevo arreglo idex y
+  //obtiene solo el valor de la llave [0], del nuevo arreglo generado, descartando el argumento que va despues de ?,
+  //reasigna el valor al correspondiente indice ($key) del arreglo index $routesArray.
+  //Si la ruta es /admin/administradores/gestion... en el índice [0] estará admin, en el [1] administradores, en el [2] gestion, etc
   $routesArray[$key] = explode("?", $value)[0]; 
 
 }

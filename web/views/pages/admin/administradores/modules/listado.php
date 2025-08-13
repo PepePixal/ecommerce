@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <a href="" class="btn bg-default templateColor py-2 px-3 btn-sm rounded-pill">Añadir Administrador</a>
+                    <a href="/admin/administradores/gestion" class="btn bg-default templateColor py-2 px-3 btn-sm rounded-pill">Añadir Administrador</a>
                 </h3>
             </div>
             <div class="card-body">

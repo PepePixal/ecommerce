@@ -18,7 +18,32 @@
   
     <!-- /.content -->
     <?php
-      include "modules/listado.php";
+
+      //valida si no viene vacio el indice [2] de la ruta (url de la página a partir del dominio)
+      if (!empty($routesArray[2])){
+
+        //valida si el valor del indice [2] de la ruta es = a gestión
+        if($routesArray[2] == "gestion"){
+
+          //insertar gestion.php en el tablero o dashboard
+          include "modules/".$routesArray[2].".php";
+
+        //si es diferente de "gestion", la página no existe
+        } else {
+
+          //mostrar a la página error 404, pagina no existe
+          echo '<script>
+            window.location = "'.$path.'404";
+          </script>';
+        }
+        
+      //si el indice [2] de la ruta, viene vacio
+      } else {
+        
+        //insertar el listado de administradores en el tablero o dashboard
+        include "modules/listado.php";
+      }
+
     ?>
 
     <!-- /.content -->
