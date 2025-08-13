@@ -63,23 +63,84 @@ class DatatableController{
                 return;
             }
 
-            /*==========================================
-              Obtener datos seleccionados, en un orden
-            ============================================*/
-            //var con las columnas de donde obtener la info del registro. En SQL * representa todos los datos
+            //var con las columnas de donde obtener la info del registro. En SQL * representa, de todos las columnas
             $select = "id_admin,rol_admin,name_admin,email_admin,date_updated_admin";
 
-            //define la url utilizando las variables creadas con la info que genera DataTable en $_POST.
-            //De la tabla admins, obten la info de las columnas en $select, ordenados según la comlumna almacenada en $orderBy,
-            //según el orden de $orderType, iniciando en el registro $start y finalizando en el registro $length que contiene el número de registros por paginación.
-            $url = "admins?select=".$select."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
-            
-            //llama método query que hace la consulta a la api, enviando parámetros,
-            //solo necesitamos que retorne results
-            $data = CurlController::request($url, $method, $fields)->results;
+            /*============================================
+              Búsqueda de datos
+            ============================================*/
+            //valida si NO esta vacia la propiedad value de search
+            if (!empty($_POST['search']['value'])) {
 
-            //registros filtrados
-            $recordsFiltered = $totalData;
+                //valida si el contenido de ['value'] coincide con la expresión regular,
+                //para garantizar que no se trata de una cadena de carácteres raros.
+                if(preg_match('/^[0-9A-Za-zñÑáéíóú ]{1,}$/', $_POST['search']['value'])){
+
+                    //define arreglo con las columnas de la tabla en las que haremos la búsqueda
+                    $linkTo = ["name_admin", "email_admin", "rol_admin"];
+
+                    //reemplaza los espacios en blanco " " por "_" , del valor de 'value', para mejora la búsqueda en la Bd
+                    $search = str_replace(" ", "_", $_POST['search']['value']);
+
+                    //itera el array con las columnas en las se hará al búsqueda y en cada columna:
+                    foreach ($linkTo as $key => $value) {
+
+                        //Define la url utilizando las variables creadas con la info que genera DataTable en $_POST.
+                        //De la tabla admins, selecciona las columnas $select y obten la info, de los registros que en la columna $value, contengan la cadena buscada $searh, ordenando los registros obtenidos según la comlumna en $orderBy,
+                        //con el tipo de orden en $orderType, iniciando en el registro $start y finalizando en el registro $length que contiene el número de registros por paginación.
+                        $url = "admins?select=".$select."&linkTo=".$value."&search=".$search."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
+
+                        //llama método query que hace la consulta a la api, enviando parámetros,
+                        //y asigna a $data solo el contenido del atributo results
+                        $data = CurlController::request($url, $method, $fields)->results;
+
+                        //valida si $data = "Not found", que es como lo devolverá la api, si no se han encontrado coincidencias
+                        if($data == "Not Found"){
+
+                            $data = array();
+                            //define var, cantidad de registros encontrados
+                            $recordsFiltered = 0;
+
+                        //si se han encontrado coincidencias con lo buscado
+                        } else {
+
+                            //define var, cantidad de rgistros encontrados
+                            $recordsFiltered = count($data);
+                            //parar el foreach
+                            break;
+
+                        }
+
+                    } //fin foreach
+
+
+                //si contiene carácteres raros
+                } else {
+                    //retorna un json con la data vacia
+                    echo '{"data": []}';
+                    return;
+
+                }
+
+            //si no hay value para buscar
+            } else {
+
+                /*==========================================
+                Obtener datos seleccionados, en un orden
+                ============================================*/
+                //Define la url utilizando las variables creadas con la info que genera DataTable en $_POST.
+                //De la tabla admins, selecciona las columnas en $select y obten la info, ordenándola según la comlumna en $orderBy,
+                //con el tipo de orden en $orderType, iniciando en el registro $start y finalizando en el registro $length que contiene el número de registros por paginación.
+                $url = "admins?select=".$select."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
+                
+                //llama método query que hace la consulta a la api, enviando parámetros,
+                //y asigna a $data solo el contenido del atributo results
+                $data = CurlController::request($url, $method, $fields)->results;
+
+                //registros filtrados
+                $recordsFiltered = $totalData;
+
+            }
 
             /*==========================================
               Cuando la $data viene vacia
