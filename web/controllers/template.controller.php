@@ -99,4 +99,14 @@ class TemplateController{
         return $code;
     }
 
+
+    /*=======================================================================
+      Capitalizar Strings - pone en mayúscula el primer carácter del strings
+    =========================================================================*/
+    //requiere parámetro, string a capitalizar
+    static public function capitalize($value) {
+        $value = mb_convert_case($value, MB_CASE_TITLE, "UTF-8");
+        return $value;
+     }
+
 }

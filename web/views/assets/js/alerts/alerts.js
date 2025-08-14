@@ -57,7 +57,8 @@ function fncSweetAlert(type, text, url){
 
         }).then((result) => {
           if (result.value) {
-            window.open(url, "top");
+            //con _top, la própia url se vuleve a cargar en la mísma página en la que está
+            window.open(url, "_top");
           }
         })
       }
@@ -87,12 +88,15 @@ function fncSweetAlert(type, text, url){
 
         }).then((result) => {
           if (result.value) {
-            window.open(url, "top");
+            //con _top, la própia url se vuleve a cargar en la mísma página en la que está
+            window.open(url, "_top");
           }
         })
       }
     
     break;
+
+    
 
   }
   

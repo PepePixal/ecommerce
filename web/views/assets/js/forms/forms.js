@@ -49,7 +49,7 @@ function validateJS(event, type){
   //si la validación del input es type text
   if(type == "text"){
     //define var con patron expresión regular válida para nombres
-    var pattern = c;
+    var pattern = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ]([a-zA-ZñÑáéíóúÁÉÍÓÚ ]){1,}$/;
     //valida si NO es true, el resultado de testear el valor del elemento que dispara el evento
     // (el onchange input del formulario), con el patrón de la expresión regular. El email to tiene formato válido.
     if(!pattern.test(event.target.value)){
@@ -64,7 +64,7 @@ function validateJS(event, type){
   //si la validación del input es type password
   if(type == "password"){
     //define var con patron expresión regular válida para nombres
-    var pattern = /^[*\\$\\!\\¡\\?\\¿\\.\\-\\_\\#\\A-Za-z0-9]{1,}$/;
+    var pattern = /^[*\\$\\!\\¡\\?\\\\.\\-\\_\\#\\0-9A-Za-z]{1,}$/;
     //valida si NO es true, el resultado de testear el valor del elemento que dispara el evento
     // (el onchange input del formulario), con el patrón de la expresión regular. El email to tiene formato válido.
     if(!pattern.test(event.target.value)){
@@ -79,12 +79,12 @@ function validateJS(event, type){
   //si la validación del input es type complete
   if(type == "complete"){
     //define var con patron expresión regular válida para no inyectar código malicioso en la bs
-    var pattern = /^[-\\(\\)\\=\\%\\&\\;\\:\\"\\'\\*\\$\\!\\¡\\?\\¿\\,\\.\\-\\_\\#\\/\\0-9A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+    var pattern = /^[-\\(\\)\\=\\%\\&\\;\\"\\'\\*\\$\\!\\¡\\?\\¿\\,\\.\\:\\-\\_\\/\\#\\0-9A-Za-zÑñáéíóúÁÉÍÓÚ ]{1,}$/;
     //valida si NO es true, el resultado de testear el valor del elemento que dispara el evento
     // (el onchange input del formulario), con el patrón de la expresión regular. El email to tiene formato válido.
     if(!pattern.test(event.target.value)){
       //accede al elemento hijo cuya clase contenga ".invalid-feedback" y en su html le inserta el mensaje
-      $(event.target).parent().children(".invalid-feedback").html("Formato de password no válido");
+      $(event.target).parent().children(".invalid-feedback").html("Carácteres especiales en la entrada");
       //limpia el valor del elemento que dispara el evento
       event.target.value = "";
       return

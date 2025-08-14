@@ -22,6 +22,14 @@
                 </div>
 
                 <div class="card-body">
+
+                    <!-- Instancia el controller, class y método que gestiona el Alta de Administradores en la BD. Se instancia aquí para posicionar los mensajes tanto de error como de éxito, en esta parte del form -->
+                    <?php
+                        require_once "controllers/admins.controller.php";
+                        $manage = new AdminsController();
+                        $manage -> adminManage();
+                    ?>
+
                     <div class="row row-cols-1 row-cols-md-2">
 
                         <div class="col">
@@ -55,7 +63,6 @@
                                         <div class="valid-feedback">Completado</div>
                                         <div class="invalid-feedback">Campo obligatorio</div>
                                     </div>
-
 
                                 </div>
                             </div>
