@@ -36,11 +36,12 @@
                                             placeholder="Escribe tu nombre"
                                             id="name_admin"
                                             name="name_admin"
+                                            onchange="validateJS(event, 'text')"
                                             required
                                         >
-                                        <!-- para la validación de formato por JS -->
-                                        <div class="valid-feedback">Válido</div>
-                                        <div class="invalid-feedback">Formato no válido</div>
+                                        
+                                        <div class="valid-feedback">Completado</div>
+                                        <div class="invalid-feedback">Campo obligatorio</div>
                                     </div>
 
                                     <div class="form-group pb-3">
@@ -51,8 +52,8 @@
                                             <option value="admin">Editor</option>
                                         </select>
                                         <!-- para la validación de formato por JS -->
-                                        <div class="valid-feedback">Válido</div>
-                                        <div class="invalid-feedback">Formato no válido</div>
+                                        <div class="valid-feedback">Completado</div>
+                                        <div class="invalid-feedback">Campo obligatorio</div>
                                     </div>
 
 
@@ -72,11 +73,12 @@
                                             placeholder="Escribe tu email"
                                             id="email_admin"
                                             name="email_admin"
+                                            onchange="validateJS(event, 'email')"
                                             required
                                         >
                                         <!-- para la validación de formato por JS -->
-                                        <div class="valid-feedback">Válido</div>
-                                        <div class="invalid-feedback">Formato no válido</div>
+                                        <div class="valid-feedback">Completado</div>
+                                        <div class="invalid-feedback">Campo obligatorio</div>
                                     </div>
 
                                     <div class="form-group pb-3">
@@ -87,11 +89,12 @@
                                             placeholder="Escribe tu contraseña"
                                             id="password_admin"
                                             name="password_admin"
+                                            onchange="validateJS(event, 'password')"
                                             required
                                         >
                                         <!-- para la validación de formato por JS -->
-                                        <div class="valid-feedback">Válido</div>
-                                        <div class="invalid-feedback">Formato no válido</div>
+                                        <div class="valid-feedback">Completado</div>
+                                        <div class="invalid-feedback">Campo obligatorio</div>
                                     </div>
 
 
@@ -119,6 +122,7 @@
                         </div>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
