@@ -225,9 +225,9 @@ class AdminsController {
 
     }
 
-    /*===================================
-      Gestion Administradores
-    ====================================*/
+    /*=========================================
+      Gestion Administradores - Alta y Edición
+    ===========================================*/
     public function adminManage(){
         
         //si la var name_admin esta definida y no es NULL
@@ -238,7 +238,6 @@ class AdminsController {
                 fncMatPreloader("on");
                 fncSweetAlert("loading", "", "");
             </script>';
-        
 
             //validación del lado del servidor del formato de email_admin, name_admin y password_admin
             if ( preg_match('/^(([^<>()[\]\\.,;:\s@"ñÑ]+(\.[^<>()[\]\\.,;:\s@"ñÑ]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-ZñÑ\-0-9]+\.)+[a-zA-ZñÑ]{2,}))$/', $_POST["email_admin"]) 

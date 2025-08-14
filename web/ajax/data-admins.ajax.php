@@ -108,18 +108,16 @@ class DatatableController{
                             $recordsFiltered = count($data);
                             //parar el foreach
                             break;
-
                         }
 
                     } //fin foreach
 
-
                 //si contiene carácteres raros
                 } else {
+
                     //retorna un json con la data vacia
                     echo '{"data": []}';
                     return;
-
                 }
 
             //si no hay value para buscar
@@ -168,8 +166,10 @@ class DatatableController{
                         $rol_admin = $value->rol_admin;
                         $date_updated_admin = $value->date_updated_admin;
 
+                        //iconos editar y eliminar.
+                        //a href, envia a la url agregandole el argumento admin con el id_admin, codificado con base64_encode()
                         $actions = "<div class=btn-group>
-                                    <a href='' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
+                                    <a href='/admin/administradores/gestion?admin=".base64_encode($value->id_admin)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
                                         <i class='fas fa-pencil-alt text-white'></i>
                                     </a>
                                     <a href='' class='btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3'>
