@@ -241,64 +241,151 @@ class AdminsController {
 
             //validación del lado del servidor del formato de email_admin, name_admin y password_admin
             if ( preg_match('/^(([^<>()[\]\\.,;:\s@"ñÑ]+(\.[^<>()[\]\\.,;:\s@"ñÑ]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-ZñÑ\-0-9]+\.)+[a-zA-ZñÑ]{2,}))$/', $_POST["email_admin"]) 
-                && preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]([a-zA-ZñÑáéíóúÁÉÍÓÚ ]){1,}$/', $_POST["name_admin"])
-                && preg_match('/^[*\\$\\!\\¡\\?\\\\.\\-\\_\\#\\0-9A-Za-z]{1,}$/', $_POST["password_admin"]) ) {
+                && preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]([a-zA-ZñÑáéíóúÁÉÍÓÚ ]){1,}$/', $_POST["name_admin"])) {
 
-                //encripta la password, con el mismo hash que utiliza la api (post.controller.php),
-                //para encriptar la password, de los neuevos usuario, antes de guardarlas en la BD
-                $crypt = crypt($_POST["password_admin"], '$2a$07$azybxcags23425sdg23sdfhsd$');
+                //valida si existe la var idAdmin, significa que está EDITANDO
+                if (isset($_POST["idAdmin"])) {
 
-                //define la url, según el manual de la api, para crear un registro en la tabla de la BD 
-                $url = "admins?token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
-                $method = "POST";
-                //define array asoc con los datos de los campos a guardar
-                $fields = array (
-                    //capitalize() pone en mayuscula el primer carácter de string,
-                    //trim() elimina espacios en blanco al inicio y al final del string,
-                    "name_admin" => trim(TemplateController::capitalize($_POST["name_admin"])),
-                    "rol_admin" => $_POST["rol_admin"],
-                    "email_admin" => $_POST["email_admin"],
-                    "password_admin" => $crypt,
-                    "date_created_admin" => date("Y-m-d")
-                );
+                    //valida si se está poniendo una nueva contraseña en el form de edidión, para cambiarla
+                    if ($_POST["password_admin"] != "") {
 
-                //llama método que hace la consulta a la BD, a través de la api
-                $createData = Curlcontroller::request($url, $method, $fields );
+                        //valida el formato de la contraseña, si se agrega al form, cuando EDITANDO
+                        if (preg_match('/^[*\\$\\!\\¡\\?\\\\.\\-\\_\\#\\0-9A-Za-z]{1,}$/', $_POST["password_admin"])){
 
-                //valida si la porp status es == 200, la conexión ha sido Correcta
-                if ($createData->status == 200) {
+                            //encripta la password, con el mismo hash que utiliza la api (post.controller.php),
+                            //para encriptar la password, de los neuevos usuario, antes de guardarlas en la BD
+                            $crypt = crypt($_POST["password_admin"], '$2a$07$azybxcags23425sdg23sdfhsd$');
 
-                    //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas SweetAlert
-                    echo '<script>
-                        fncFormatInputs();
-                        fncMatPreloader("off");
-                        fncSweetAlert("success", "Registro Adminisrador creado corréctamente", "/admin/administradores");
-                    </script>';
+                        } else {
 
-                //si la conexión no ha sido Correcta, valida dos causas
-                } else {
+                            //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas Tastr
+                            echo '<script>
+                                fncFormatInputs();
+                                fncMatPreloader("off");
+                                fncToastr("error", "Formato de contraseña no válido");
+                            </script>';
+                        }
 
-                    //cuando el token del Administrador logueado está vencido, la api retorna un error 303
-                    if ($createData->status == 303) {
+                    //si no hay contraseña nueva en el form EDITANDO
+                    } else {
+                        //se conserva la original encriptada, que está el value del input hidden odlPassword
+                        $crypt = $_POST["oldPassword"];
+                    }
+
+                    //define parámetros, para solicitud PUT de actualización, al endpoint de la api, siguiendo la documentación de la api
+                    $url = "admins?id=".base64_decode($_POST["idAdmin"])."&nameId=id_admin&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+                    $method = "PUT";
+                    //envia los campos a modificar en formato sistaxis urlencoded, siguiendo la doc de la api.
+                    $fields = "name_admin=".trim(TemplateController::capitalize($_POST["name_admin"]))."&rol_admin=".$_POST["rol_admin"]."&email_admin=".$_POST["email_admin"]."&password_admin=".$crypt;
+
+                    //llama método que hace la consulta PUT a la BD, a través de la api
+                    $updateData = Curlcontroller::request($url, $method, $fields );
+
+                    //valida si la porp status es == 200, la conexión ha sido Correcta
+                    if ($updateData->status == 200) {
+
                         //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas SweetAlert
                         echo '<script>
                             fncFormatInputs();
                             fncMatPreloader("off");
-                            fncSweetAlert("Error", "Sesión caducada. Vuelva a iniciar sesión", "/salir");
+                            fncSweetAlert("success", "Registro Adminisrador Actualizado corréctamente", "/admin/administradores");
                         </script>';
-                    
-                    //si no ha sido por un error 303 de token
+
+                    //si la conexión no ha sido Correcta, valida dos causas
                     } else {
-                        //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas Toastr
+
+                        //cuando el token del Administrador logueado está vencido, la api retorna un error 303
+                        if ($updateData->status == 303) {
+                            //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas SweetAlert
+                            echo '<script>
+                                fncFormatInputs();
+                                fncMatPreloader("off");
+                                fncSweetAlert("Error", "Sesión caducada. Vuelva a iniciar sesión", "/salir");
+                            </script>';
+                        
+                        //si no ha sido por un error 303 de token
+                        } else {
+                            //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas Toastr
+                            echo '<script>
+                                fncFormatInputs();
+                                fncMatPreloader("off");
+                                fncToastr("error", "Error al guardar los datos modificados. Inténtalo de nuevo");
+                            </script>';
+                        }
+                    }
+
+                //si no esta editando, esta dando ALTA NUEVA
+                } else {
+
+                    if (preg_match('/^[*\\$\\!\\¡\\?\\\\.\\-\\_\\#\\0-9A-Za-z]{1,}$/', $_POST["password_admin"])){
+
+                    //encripta la password, con el mismo hash que utiliza la api (post.controller.php),
+                    //para encriptar la password, de los neuevos usuario, antes de guardarlas en la BD
+                    $crypt = crypt($_POST["password_admin"], '$2a$07$azybxcags23425sdg23sdfhsd$');
+
+                    }  else {
+
+                        //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas Tastr
                         echo '<script>
                             fncFormatInputs();
                             fncMatPreloader("off");
-                            fncToastr("error", "Error al guardar los datos, inténtalo de nuevo");
+                            fncToastr("error", "Formato de contraseña no válido");
                         </script>';
                     }
 
-                }
+                    //define la url, según el manual de la api, para crear un registro en la tabla de la BD 
+                    $url = "admins?token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+                    $method = "POST";
+                    //define array asoc con los datos de los campos a guardar
+                    $fields = array (
+                        //capitalize() pone en mayuscula el primer carácter de string,
+                        //trim() elimina espacios en blanco al inicio y al final del string,
+                        "name_admin" => trim(TemplateController::capitalize($_POST["name_admin"])),
+                        "rol_admin" => $_POST["rol_admin"],
+                        "email_admin" => $_POST["email_admin"],
+                        "password_admin" => $crypt,
+                        "date_created_admin" => date("Y-m-d")
+                    );
 
+                    //llama método que hace la consulta a la BD, a través de la api
+                    $createData = Curlcontroller::request($url, $method, $fields );
+
+                    //valida si la porp status es == 200, la conexión ha sido Correcta
+                    if ($createData->status == 200) {
+
+                        //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas SweetAlert
+                        echo '<script>
+                            fncFormatInputs();
+                            fncMatPreloader("off");
+                            fncSweetAlert("success", "Registro Adminisrador creado corréctamente", "/admin/administradores");
+                        </script>';
+
+                    //si la conexión no ha sido Correcta, valida dos causas
+                    } else {
+
+                        //cuando el token del Administrador logueado está vencido, la api retorna un error 303
+                        if ($createData->status == 303) {
+                            //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas SweetAlert
+                            echo '<script>
+                                fncFormatInputs();
+                                fncMatPreloader("off");
+                                fncSweetAlert("Error", "Sesión caducada. Vuelva a iniciar sesión", "/salir");
+                            </script>';
+                        
+                        //si no ha sido por un error 303 de token
+                        } else {
+                            //ejecuta el script: formatea los inputs, desactiva MatPreloader y llama al plugin de alertas Toastr
+                            echo '<script>
+                                fncFormatInputs();
+                                fncMatPreloader("off");
+                                fncToastr("error", "ERROR al guardar los datos, inténtalo de nuevo");
+                            </script>';
+                        }
+
+                    }
+
+                }
+                
             //si no pasa la validación de formato
             } else {
 

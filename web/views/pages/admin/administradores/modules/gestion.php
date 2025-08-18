@@ -113,7 +113,7 @@
                                         <label for="rol_admin">Rol <sup class="text-danger font-weight-bold">*</sup></label>
                                         <select name="rol_admin" id="rol_admin" class="form-control" required>
                                             <option value="">Elije Rol</option>
-                                            <!-- options condicionadas a si está EDITANDO -->
+                                            <!-- selected de options, condicionado a si está EDITANDO -->
                                             <option value="admin"  <?php if (!empty($admin) && $admin->rol_admin == "admin"): ?> selected <?php endif ?>>Administrador</option>
                                             <option value="editor" <?php if (!empty($admin) && $admin->rol_admin == "editor"): ?> selected <?php endif ?>>Editor</option>
                                         </select>
@@ -150,6 +150,7 @@
 
                                     <div class="form-group pb-3">
                                         <label for="password_admin">Contraseña <sup class="text-danger font-weight-bold">*</sup></label>
+                                        <!-- required condicionado solo a si es ALTA nueva -->
                                         <input
                                             type="password"
                                             class="form-control"
@@ -157,7 +158,8 @@
                                             id="password_admin"
                                             name="password_admin"
                                             onchange="validateJS(event, 'password')"
-                                            required
+                                            <?php if (empty($admin)): ?> required <?php endif ?>
+                                      
                                         >
                                         <!-- para la validación de formato por JS -->
                                         <div class="valid-feedback">Completado</div>
