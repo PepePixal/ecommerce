@@ -24,7 +24,7 @@ if (!isset($_SESSION["admin"])) {
          $routesArray[1] == "banners" ||
          $routesArray[1] == "categorias" ||
          $routesArray[1] == "subcategorias" ||
-         $routesArray[1] == "inventario" ||
+         $routesArray[1] == "productos" ||
          $routesArray[1] == "mensajes" ||
          $routesArray[1] == "pedidos" ||
          $routesArray[1] == "disputas" ||

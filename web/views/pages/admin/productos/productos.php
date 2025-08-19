@@ -4,13 +4,13 @@
       <div class="container">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 class="m-0"> <small>Inventario</small></h2>
+            <h2 class="m-0"> <small>Productos</small></h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/admin">Tablero</a></li>
-              <li class="breadcrumb-item active">Productos</li>
               <li class="breadcrumb-item active">Inventario</li>
+              <li class="breadcrumb-item active">Productos</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

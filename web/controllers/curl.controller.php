@@ -1,9 +1,10 @@
 <?php
 
 class CurlController{
-    /*=====================================================
-    Peticiones a la API - recibe $url, $method y $fileds (campos)
-    ======================================================*/
+    /*============================================================
+    Peticiones cURL a la API - recibe $url, $method y $fileds (campos)
+    ==============================================================*/
+    
     static public function request($url, $method, $fields){
         //código base obtenido de POSTMAN y modificado
 

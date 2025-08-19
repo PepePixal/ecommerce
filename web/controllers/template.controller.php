@@ -109,4 +109,23 @@ class TemplateController{
         return $value;
      }
 
+
+    /*=======================================================================
+      Reducir catidad de texto en un párrafo según el limit
+    =========================================================================*/
+    //requiere texto a reducir y el límite de pala
+    static public function reduceText($value, $limit){
+
+        //valida si la longitud del texto > que el límite deseado
+        if (strlen($value) > $limit){
+
+            //obtiene el trozo de texto desde la posición inicial 0 hasta la posicón limit,
+            //le concatena "..." y lo reasigna a la var $value.
+            $value = substr($value, 0, $limit)."...";
+        }
+        //retorna 
+        return $value;
+    }
+
+
 }

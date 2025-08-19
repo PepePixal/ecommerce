@@ -9,11 +9,11 @@ class DatatableController{
 
     public function data() {
 
-        //valida si la var array $_POST No viene vacia
+        //valida si No viene vacia, la var array $_POST, generado por la peticion ajax de tables.js
         if(!empty($_POST)){
 
             /*=========================================================
-              Definir variables para guardar la info que traerá $_POST
+              Definir variables para guardar la info que trae $_POST
             =========================================================*/
 
             //echo '<pre>$draw '; print_r($_POST); echo '</pre>';
@@ -39,10 +39,11 @@ class DatatableController{
             // echo '<pre>$length '; print_r($length); echo '</pre>';
 
             /*==========================================
-              Obtener el total de registros de la tabla
+              Total de registros de la tabla
             ============================================*/
             //define los parámetros para la consulta (query) a la api
-            $url = "admins?select=id_admin";
+            //De la tabla categories, selecciona la columna id_category
+            $url = "categories?select=id_category";
             $method = "GET";
             $fields = array();
 
@@ -52,7 +53,7 @@ class DatatableController{
             //valida si la propiedad [status] de la respuesta es == 200, conexión ok
             if ($response->status == 200) {
 
-                //obtiene el total de registros, de la prop [total]
+                //obtiene el total de registros, de la prop [total] de la respuesta de la api rest
                 $totalData = $response->total;
 
             //si la conexión no es correcta o la tabla está vacia
@@ -68,12 +69,15 @@ class DatatableController{
                 return;
             }
 
-            //var con las columnas de donde obtener la info del registro. En SQL * representa, de todos las columnas
-            $select = "id_admin,rol_admin,name_admin,email_admin,date_updated_admin";
+
+            //var con las columnas de donde obtener la info del registro. En SQL * representa de todas las columnas
+            $select = "*";
+            
 
             /*============================================
-              Búsqueda de datos
+              Búsqueda de datos del buscador DataTable
             ============================================*/
+
             //valida si NO esta vacia la propiedad value de search
             if (!empty($_POST['search']['value'])) {
 
@@ -81,8 +85,8 @@ class DatatableController{
                 //para garantizar que no se trata de una cadena de carácteres raros.
                 if(preg_match('/^[0-9A-Za-zñÑáéíóú ]{1,}$/', $_POST['search']['value'])){
 
-                    //define arreglo con las columnas de la tabla en las que haremos la búsqueda
-                    $linkTo = ["name_admin", "email_admin", "rol_admin"];
+                    //define arreglo con las columnas de la tabla sobre las que se hará la búsqueda
+                    $linkTo = ["name_category", "url_category", "description_category", "keywords_caegory", "date_updated_category"];
 
                     //reemplaza los espacios en blanco " " por "_" , del valor de 'value', para mejora la búsqueda en la Bd
                     $search = str_replace(" ", "_", $_POST['search']['value']);
@@ -91,9 +95,9 @@ class DatatableController{
                     foreach ($linkTo as $key => $value) {
 
                         //Define la url utilizando las variables creadas con la info que genera DataTable en $_POST.
-                        //De la tabla admins, selecciona las columnas $select y obten la info, de los registros que en la columna $value, contengan la cadena buscada $searh, ordenando los registros obtenidos según la comlumna en $orderBy,
+                        //De la tabla categories, selecciona las columnas $select y obten la info, de los registros que en la columna $value, contengan la cadena buscada $searh, ordenando los registros obtenidos según la comlumna en $orderBy,
                         //con el tipo de orden en $orderType, iniciando en el registro $start y finalizando en el registro $length que contiene el número de registros por paginación.
-                        $url = "admins?select=".$select."&linkTo=".$value."&search=".$search."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
+                        $url = "categories?select=".$select."&linkTo=".$value."&search=".$search."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
 
                         //llama método query que hace la consulta a la api, enviando parámetros,
                         //y asigna a $data solo el contenido del atributo results
@@ -131,16 +135,17 @@ class DatatableController{
                     return;
                 }
 
-            //si no hay value para buscar
+
+            //si no hay value para buscar (buscador de DataTable)
             } else {
 
                 /*==========================================
                 Obtener datos seleccionados, en un orden
                 ============================================*/
                 //Define la url utilizando las variables creadas con la info que genera DataTable en $_POST.
-                //De la tabla admins, selecciona las columnas en $select y obten la info, ordenándola según la comlumna en $orderBy,
+                //De la tabla categories, selecciona las columnas en $select (*) y obten la info, ordenándola según la comlumna en $orderBy,
                 //con el tipo de orden en $orderType, iniciando en el registro $start y finalizando en el registro $length que contiene el número de registros por paginación.
-                $url = "admins?select=".$select."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
+                $url = "categories?select=".$select."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
                 
                 //llama método query que hace la consulta a la api, enviando parámetros,
                 //y asigna a $data solo el contenido del atributo results
@@ -155,6 +160,7 @@ class DatatableController{
               Cuando la $data viene vacia
             ============================================*/
             if (empty($data)) {
+
                 //retorna un json con datos para que pinte la tabla y la data vacia, a tables.js
                 echo '{
                     "Draw": 1,
@@ -162,13 +168,13 @@ class DatatableController{
                     "recordsFiltered": 0,
                     "data":[]
                 }';
-                //par el código aquí
+                //para el código aquí
                 return;
             }
 
-            /*==============================================
-             Construir del dato JSON a retornar a DataTable
-            ===============================================*/
+            /*=======================================================================
+             Construir del dato JSON con la info de la BD, para retornar a DataTable
+            ========================================================================*/
             $dataJson = '{
                 "Draw": '.intval($draw).',
                 "recordsTotal": '.$totalData.',
@@ -176,19 +182,32 @@ class DatatableController{
                 "data": [';  
                     foreach ($data as $key => $value) {
 
+                        /*===========================
+                          Status
+                        ===========================*/
+                        $status_category = $value->status_category;
+
+                        /*===========================
+                          Textos
+                        ===========================*/
                         //define variables
-                        $name_admin = $value->name_admin;
-                        $email_admin = $value->email_admin;
-                        $rol_admin = $value->rol_admin;
-                        $date_updated_admin = $value->date_updated_admin;
+                        $name_category = $value->name_category;
+                        $url_category = $value->url_category;
+                        $image_category = $value->image_category;
+                        $description_category = $value->description_category;
+                        $keywords_category = $value->keywords_category;
+                        $subcategories_category = $value->subcategories_category;
+                        $products_category = $value->products_category;
+                        $views_category = $value->views_category;
+                        $date_updated_category = $value->date_updated_category;
 
                         //iconos editar y eliminar.
                         //a href, envia a la url agregandole el argumento admin con el id_admin, codificado con base64_encode()
                         $actions = "<div class=btn-group>
-                                    <a href='/admin/administradores/gestion?admin=".base64_encode($value->id_admin)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
+                                    <a href='/admin/categorias/gestion?admin=".base64_encode($value->id_category)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
                                         <i class='fas fa-pencil-alt text-white'></i>
                                     </a>
-                                    <button class='btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3 deleteItem' rol='admin' table='admins' column='admin' idItem='".base64_encode($value->id_admin)."'>
+                                    <button class='btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3 deleteItem' rol='admin' table='categories' column='category' idItem='".base64_encode($value->id_category)."'>
                                         <i class='fas fa-trash-alt text-white'></i>
                                     </button>
                                 </div>";
@@ -197,16 +216,22 @@ class DatatableController{
                         $actions = TemplateController::htmlClean($actions);
 
                         $dataJson.='{
-                            "id_admin":"'.($start+$key+1).'",
-                            "name_admin":"'.$name_admin.'",
-                            "email_admin":"'.$email_admin.'",
-                            "rol_admin":"'.$rol_admin.'",
-                            "date_updated_admin":"'.$date_updated_admin.'",
+                            "id_category":"'.($start+$key+1).'",
+                            "status_category":"'.$status_category.'",
+                            "name_category":"'.$name_category.'",
+                            "url_category":"'.$url_category.'",
+                            "image_category":"'.$image_category.'",
+                            "description_category":"'.$description_category.'",
+                            "keywords_category":"'.$keywords_category.'",
+                            "subcategories_category":"'.$subcategories_category.'",
+                            "products_category":"'.$products_category.'",
+                            "views_category":"'.$views_category.'",
+                            "date_updated_category":"'.$date_updated_category.'",                            
                             "actions":"'.$actions.'"
                         },';
                     }
                     
-            //substr retorna un nuevo string $dataJson, desde el primer caracter (0) menos el último, que es una coma, para que no rompa la tabla. pasa de {},...,{}, a {},...,{}
+            //substr retorna un nuevo string $dataJson, desde el primer caracter (0) menos el último, que es una coma, para que no rompa la tabla. pasa de {},...,{}, a {},...{}
             $dataJson = substr($dataJson,0,-1);
 
             $dataJson .= ']}';

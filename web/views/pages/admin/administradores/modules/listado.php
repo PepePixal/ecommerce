@@ -7,7 +7,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <table id="tables" class="table table-bordered table-striped">
+                <table id="tables" class="table table-bordered table-striped adminsTable">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -21,7 +21,7 @@
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>Jose Tiendas</td>
+                            <td>Jose Tienda Tabla</td>
                             <td>admin@ecommerce.com</td>
                             <td>Admin</td>
                             <td>2325-08-08 12:12:00</td>

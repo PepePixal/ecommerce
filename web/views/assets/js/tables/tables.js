@@ -1,10 +1,69 @@
-//Ejecuta el Plugin DataTable sobre la tabla cuyo id="tables"
+/*==================================================
+  Tabla para administradores para DataTables plugin
+====================================================*/
+//valida si existe una clase .adminsTable (si su long es > 0, existe), dentro del dom
+if ($(".adminsTable").length > 0) {
+
+  var url = "/ajax/data-admins.ajax.php";
+
+  //columnas de donde obtener la info de la tabla, cuando se haga con la query a la api rest y 
+  //que posteriormente se insertará en las columnas de la tabla html sobre la que se ha aplicado el plugin DataTable, en administradores/modules/listado.php
+  //excepto la columna "actions" que contiene los botones y no tiene relación con la tabla de la BD, con los false no se buscará en la BD.
+  var columns = [
+    {"data":"id_admin"},
+    {"data":"name_admin"},
+    {"data":"email_admin"},
+    {"data":"rol_admin"},
+    {"data":"date_updated_admin"},
+    {"data":"actions", "orderable":false, "searchable":false}
+  ]
+
+   var order = [0,"desc"];
+
+}
+
+/*==============================================
+  Tabla para categorias para DataTables plugin
+================================================*/
+//valida si existe una clase .categoriesTable (si su long es > 0, existe), dentro del dom
+if ($(".categoriesTable").length > 0) {
+
+  var url = "/ajax/data-categories.ajax.php";
+
+  //columnas de donde obtener la info de la tabla, cuando se haga con la query a la api rest y 
+  //que posteriormente se insertará en las columnas de la tabla html sobre la que se ha aplicado el plugin DataTable, en categorias/modules/listado.php
+  //excepto la columna "actions" que contiene los botones y no tiene relación con la tabla de la BD, con los false no se buscará en la BD.
+  var columns = [
+    {"data":"id_category"},
+    {"data":"status_category"},
+    {"data":"name_category"},
+    {"data":"url_category"},
+    {"data":"image_category"},
+    {"data":"description_category"},
+    {"data":"keywords_category"},
+    {"data":"subcategories_category"},
+    {"data":"products_category"},
+    {"data":"views_category"},
+    {"data":"date_updated_category"},
+    {"data":"actions", "orderable":false, "searchable":false}
+  ]
+
+  var order = [0,"desc"];
+  
+}
+
+/*======================================
+  Configuración Global de DataTable
+=======================================*/
+//el plugin DataTable() hace una consulta ajax a traves de una url con un archivo .php que
+//a su vez, hará una consulta query a la api rest, para obtener la info de la BD,
+//que devolverá a DataTable() en formato JSON y la insertara en la tabla html que corresponda
 
 $("#tables").DataTable({
 
     "responsive": true,
     "aLengthMenu":[[10, 25, 50, 100],[10, 25, 50, 100]],
-    "order":[[0,"desc"]],
+    "order":[order],
     "lengthChange": true, 
     "autoWidth": false,
     "processing":true,
@@ -12,31 +71,23 @@ $("#tables").DataTable({
     /*==========================================================
       Configuración solicitud ajax, del lado del servidor
     ==========================================================*/
-
     "serverSide": true,
 
+    //solicitud ajax a la url, recibirá un JSON como respuesta
     "ajax":{
-        //url al archivo que hará la solicitud ajax a la BD, a través de la api.
-        //Obtiene $path, del value del input hidden con id="urlPath", en template.php y le agrega + el resto de la url
-        "url":$("#urlPath").val()+"ajax/data-admins.ajax.php",
-        //tipo de solicitur ajax, que genera contenido en la var super glob $_POST
+        //url del archivo php que hará la solicitud query a la BD, a través de la api,
+        //la url depende de a que tabla se hará la query a la api rest
+        "url":url,
+        //tipo de solicitud ajax, que genera contenido en la var super glob $_POST
         "type": "POST"
     },
 
-    //columnas donde se buscará info en la tabla de la BD con la solucitud ajax y posteriormente se insertará 
-    //en las columnas de la tabla html sobre la que se ha aplicado el plugin DataTable, en administradores/modules/listado.php
-    //excepto la columna "actions" que contiene los botones y no tiene relación con la tabla de la BD, con los false no se buscará en la BD.
-    "columns":[
-        {"data":"id_admin"},
-        {"data":"name_admin"},
-        {"data":"email_admin"},
-        {"data":"rol_admin"},
-        {"data":"date_updated_admin"},
-        {"data":"actions", "orderable":false, "searchable":false}
-    ],
+    //las columns a consultar dependen de a que tabla se hará la query a la api rest
+    "columns": columns,
 
-
-    //** Configuración lenguaje */
+    /*==========================================================
+      Configuracón Global del lenguaje de DataTable
+    ==========================================================*/
     //sustituye los textos del plugin por textos en español
     "language":{
       "sProcessing":     "Procesando...",
@@ -145,6 +196,5 @@ $(document).on("click",".deleteItem", function(){
     }
 
   });
-
 
 })
