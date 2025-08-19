@@ -46,12 +46,15 @@ class AdminsController {
                     //lo asigna a la var "admin" del arreglo $_SESSION
                     $_SESSION["admin"] = $login->results[0];
 
-                    //imprime un <script> que recarga la página actual ecommerce.com/admin,
-                    //volviendo a cargar template.php, donde se separa la url y se comprueba:
+                    //imprime un <script> que:
+                    //Genera una variable en el localStorage y le asigna el valor del token del admin logueado y
+                    //recarga la página actual ecommerce.com/admin, para que 
+                    //se vuelva a cargar template.php, donde se separa la url y se comprueba:
                     //si existe la var "admin" en $_SESSION, para cargar el botón que activa el slide lateral y
-                    //si la url contiene /admin, para cargar admin.php o home.php
+                    //si la url contiene /admin, para cargar admin.php o home.php,
                     //si carga admin.php, se comprueba  y si hay algo en $_SESSION["admin"] y se carga tablero.php
                     echo '<script>
+                        localStorage.setItem("token-admin", "'.$login->results[0]->token_admin.'");
                         location.reload();
                     </script> ';
 

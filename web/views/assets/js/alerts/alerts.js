@@ -63,9 +63,9 @@ function fncSweetAlert(type, text, url){
         })
       }
 
-      break;
+    break;
 
-      case "success":
+    case "success":
 
       //valida si la var url viene vacia
       if (url=="") {
@@ -96,7 +96,36 @@ function fncSweetAlert(type, text, url){
     
     break;
 
+    case "loading":
+      Swal.fire({
+        allowOutsideClick: false,
+        icon: 'info',
+        text: text
+      })
+      Swal.showLoading()
     
+    break;
+
+    case "confirm":
+
+        return new Promise(resolve=>{
+
+          Swal.fire({
+              text: text,
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              cancelButtonText: "No",
+              confirmButtonText: "Si, continuar"
+          }).then(function(result){
+              
+              resolve(result.value);
+
+          })
+        })
+
+    break;
 
   }
   

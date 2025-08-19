@@ -172,9 +172,9 @@ class DatatableController{
                                     <a href='/admin/administradores/gestion?admin=".base64_encode($value->id_admin)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
                                         <i class='fas fa-pencil-alt text-white'></i>
                                     </a>
-                                    <a href='' class='btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3'>
+                                    <button class='btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3 deleteItem' rol='admin' table='admins' column='admin' idItem='".base64_encode($value->id_admin)."'>
                                         <i class='fas fa-trash-alt text-white'></i>
-                                    </a>
+                                    </button>
                                 </div>";
                         
                         //aplica la función htmlClean() a $actions, para eliminar los espacios 
