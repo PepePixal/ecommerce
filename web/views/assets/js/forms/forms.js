@@ -22,6 +22,87 @@
 
 
 /*==============================================================
+  Validar datos repetidos en la BD
+===============================================================*/
+//recibe el evento que dispara la función y el type para saber que tabla consultar
+function validateDataRepeat(event, type){
+
+  //valida si el tipo es == category
+  if (type == "category"){
+    
+    //vars con la tabla y la columna a consultar
+    var table = "categories";
+    var linkTo = "name_category";
+  }
+
+  //var para el value del elemento que dispara el evento
+  var value = event.target.value;
+
+  //define data tipo FormData, para enviar la info en petición ajax,
+  //que se enviará a una url con un archivo .php, que realizará la consulta a la api rest
+  var data = new FormData();
+  data.append("table", table);
+  data.append("equalTo", value);
+  data.append("linkTo", linkTo);
+
+  //petición ajax al archivo .php de la url. 
+  $.ajax({
+    url: "/ajax/forms.ajax.php",
+    method: "POST",
+    data: data,
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function(response){
+
+      //si response = 404, significa que NO se ha encontrado el valor (value) en la BD,
+      //por tanto, si que se puede agregar al la BD
+      if (response == 404){
+        //validación tipo completa de texto seguro, del valor del elemento (input) que genera el evento
+        validateJS(event, "completa");
+
+        //llama func que crea una url, con el valor del elemento (input) que origina el evento y
+        //asigna la url creada, al value del input con class "url_category"
+        createUrl(event, "url_category" );
+      } 
+
+    }
+  })
+
+}
+
+/*==============================================================
+  Función para crear URLs y asignarla a un elemento html
+===============================================================*/
+//recibe el evento y el name del input a cuyo value le queramos asignar la URL creada 
+function createUrl(event, input){
+    
+  //obtiene el value del elemento (input) que origina el evento
+  var value = event.target.value;
+
+  //** Validaciones para crear URLs válidas */
+  //convierte en minúscula el value
+  value = value.toLowerCase();
+  //validación que reemplaza cualquier carácter especial por nada "" (lo elimina);
+  value = value.replace(/[#\\(\\)\\=\\%\\&\\;\\"\\'\\*\\$\\!\\¡\\?\\¿\\,\\.\\:\\/\\]/g, "");
+  //validación, si encuntra uno o varios (/g) espacios en blanco, los sustituye por "-"
+  value = value.replace(/[ ]/g, "-");
+  value = value.replace(/[á]/g, "a");
+  value = value.replace(/[é]/g, "e");
+  value = value.replace(/[í]/g, "i");
+  value = value.replace(/[ó]/g, "o");
+  value = value.replace(/[ú]/g, "u");
+  value = value.replace(/[ñ]/g, "n");
+
+  //código jquery.
+  //busca en el dom, un elemento con atributo name= al valor del param input y 
+  //le asigna el valor de la var value, a su value
+  $('[name="'+input+'"]').val(value);
+
+}
+
+
+/*==============================================================
   Validación formulario personalizada - lado del cliente
 ===============================================================*/
 //recibe el parámetro event (evento que dispara la validación) y type (tipo de validación)
@@ -144,5 +225,11 @@ function getEmail(){
 
 //ejecuta la función getEmail(), a la carga del archivo forms.js
 getEmail();
+
+
+/*==============================================================
+  Genera la url de categoria a partir del nombre, en el form
+===============================================================*/
+
 
 
