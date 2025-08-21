@@ -147,6 +147,7 @@
                                         placeholder="Escribe la descripción"
                                         id="description_category"
                                         name="description_category"
+                                        onchange="validateJS(event, 'complete')"
                                         required
                                         ></textarea>
 
@@ -155,17 +156,20 @@
                                     </div>
 
                                     <!--======================================
-                                      Palabras Claves
+                                      Palabras Claves de la categoría
                                     ========================================-->
                                     <div class="form-group pb-3">
                                         <label for="keywords_category">Palabras Clave <sup class="text-danger font-weight-bold">*</sup></label>
+                                        <!-- class tags-input y data-role="tagsinput", para poder agregar tags (etiquetas) al input. 
+                                         Según la documentación del plugin Tags Input -->
                                         <input
                                             type="text"
-                                            class="form-control"
-                                            placeholder="Escribe las palabras clave"
+                                            class="form-control tags-input"
+                                            data-role="tagsinput"
+                                            placeholder="Palabra clave + Intro. Max. 5"
                                             id="keywords_category"
                                             name="keywords_category"
-                                            onchange="validateJS(event, 'text')"
+                                            onchange="validateJS(event, 'complete')"
                                             required
                                         >
                                         

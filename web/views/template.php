@@ -155,6 +155,9 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+  <!-- Tags Input plugin -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/tags-input/tags-input.css">
   
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
@@ -215,6 +218,10 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   
+  <!-- Tags Input plugin -->
+  <!-- https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/ -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/tags-input/tags-input.js"></script>
+
   <!-- Alertas Personalizado -->
   <script src="<?php echo $path ?>views/assets/js/alerts/alerts.js"></script>
 </head>

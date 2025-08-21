@@ -160,7 +160,7 @@ function validateJS(event, type){
   //si la validación del input es type complete
   if(type == "complete"){
     //define var con patron expresión regular válida para no inyectar código malicioso en la bs
-    var pattern = /^[-\\(\\)\\=\\%\\&\\;\\"\\'\\*\\$\\!\\¡\\?\\¿\\,\\.\\:\\-\\_\\/\\#\\0-9A-Za-zÑñáéíóúÁÉÍÓÚ ]{1,}$/;
+    var pattern = /^[-\\(\\)\\=\\%\\&\\;\\"\\'\\*\\$\\!\\¡\\?\\¿\\,\\.\\:\\-\\_\\/\\#\\0-9A-Za-zÑñÇçáéíóúÁÉÍÓÚ ]{1,}$/;
     //valida si NO es true, el resultado de testear el valor del elemento que dispara el evento
     // (el onchange input del formulario), con el patrón de la expresión regular. El email to tiene formato válido.
     if(!pattern.test(event.target.value)){
@@ -302,3 +302,17 @@ $(document).on("click", '[data-bs-dismiss="modal"]', function(){
 })
 
 
+/*====================================================================================
+  Tags Input o Etiquetas en los input - con la librería Tags Input
+=====================================================================================*/
+//Activar el uso de la librería o plugin Tags Input
+//Valida los elementos del dom con class .tags-input, cuya long es > 0 (se supune que todos)
+if($('.tags-input').length > 0){
+
+  //llama al método tagsinput() del plugin Tags Input, sobre los elementos seleccionados
+  $('.tags-input').tagsinput({
+    //con un máximo de 5 tags o etiquetas
+    maxTags: 5
+  }); 
+
+}
