@@ -59,7 +59,7 @@
                                     ========================================-->
                                     <div class="form-group pb-3">
                                         <label for="name_category">Nobre Cat. <sup class="text-danger font-weight-bold">*</sup></label>
-                                        <!-- onchange llama a la función enviando el valor del elemento (input) que dispara el evento y
+                                        <!-- el evento onchange llama a la función enviando el valor del elemento (input) que dispara el evento y
                                           el tipo de tabla sobre la que buscar si el elemento ya existe -->
                                         <input
                                             type="text"
@@ -99,11 +99,12 @@
                                     ==================================================-->
                                     <div class="form-group pb-3">
                                         <label for="icon_category">Icono <sup class="text-danger font-weight-bold">*</sup></label>
-                                        <!-- readonly convierte el input a solo lectura. La url se genera auto según el Nombre -->
+                                        <!-- el atributo de evento onfocus, llama la función js addIcon() enviando el parámetro event,
+                                         que es un objeto que contiene toda la información sobre el evento, en este caso el onfocus -->
                                         
                                         <div class="input-group">
-
-                                            <span class="input-group-text">
+                                            <!-- class iconView, para el cambio de icono desde la ventana modal -->
+                                            <span class="input-group-text iconView">
                                                 <i class="fas fa-shopping-bag"></i>
                                             </span>
                                             
@@ -112,9 +113,10 @@
                                             class="form-control"
                                             id="icon_category"
                                             name="icon_category"
+                                            onfocus="addIcon(event)"
+                                            value="fas fa-shopping-bag"
                                             required
-                                            >
-                                            
+                                            >                 
                                         </div>
 
                                         <div class="valid-feedback">Completado</div>
@@ -234,6 +236,55 @@
                 </div>
 
             </form>
+        </div>
+    </div>
+</div>
+
+<!--===================================================================
+  Ventana Modal de Bootstrap, con la libreria de iconos de fontawesome
+=====================================================================-->
+<!-- la ventana modal permanece oculta hasta que se dispara o invoca desde js con $("#myIcon").show(); -->
+<div class="modal" id="myIcon">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h4 class="modal-title">Cambiar Icono</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body mx-3">
+
+                <!-- buscador de iconos -->
+                <input type="text" class="form-control mt-4 mb-3 myInputIcon" placeholder="Buscar Icono"></input>
+
+                <?php
+                    //obtener los nombres de clase de los iconos, que estan en el archivo json/fontawesome.json, en formato json
+                    $data = file_get_contents($path."/views/assets/json/fontawesome.json");
+                    //decodifica el json a array index y lo asigna a $icons
+                    $icons = json_decode($data);
+                ?>
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-3" style="overflow-y: scroll; overflow-x: hidden; height:500px">
+                    <!-- para obtener un listado de los iconos,
+                    itera el arreglo index con los nombres de clases de los iconos y por cada nombre -->
+                    <?php foreach ($icons as $key => $value): ?>
+                        <!-- class btnChangeIcon para el buscador js -->
+                        <!-- atributo mode, con el mismo valor que el icono (nombre el icono), para el buscador js  -->
+                        <div class="col text-center py-4 btn btnChangeIcon" mode="<?php echo $value ?>">
+                            <!-- en cada itereción el valor de la clase es el nombre de cada icono (fontawesome),
+                             y fa-2x para aumentar su tamaño original -->
+                            <i class="<?php echo $value ?> fa-2x"></i>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">Salir</button>
+            </div>
+        
         </div>
     </div>
 </div>

@@ -71,9 +71,9 @@ function validateDataRepeat(event, type){
 
 }
 
-/*==============================================================
-  Función para crear URLs y asignarla a un elemento html
-===============================================================*/
+/*=================================================================
+  Función para crear URLs y asignarla a un elemento html del form
+==================================================================*/
 //recibe el evento y el name del input a cuyo value le queramos asignar la URL creada 
 function createUrl(event, input){
     
@@ -228,8 +228,77 @@ getEmail();
 
 
 /*==============================================================
-  Genera la url de categoria a partir del nombre, en el form
+  Cambio de Icono con Buscador, para la categoría, en el form
 ===============================================================*/
+function addIcon(event){
 
+  //.show() dispara o ejecuta la ventana modal con id = myIcon, hecha con Bootstrap5, en categorias/modules/gestion.php,
+  //cuando se ejecute la función addIcon()
+  $("#myIcon").show();
+
+  //** Buscador de iconos en la ventana modal **//
+  //Cuando documento (ventana modal) esté preparado (cargado), ejecuta función
+  $(document).ready(function(){
+    //sobre el elemento con class .myInputIcon (input del buscador), cuando se deja de teclear, ejecta función
+    $(".myInputIcon").on("keyup", function(){
+      //obtiene el value de este campo, donde se está escribiendo (input del buscador), lo convierte en minúsculas y lo asigna a la var value
+      var value = $(this).val().toLowerCase();
+      //obtiene los elementos con class .btnChangeIcon (divs con los iconos),
+      //itera sobre cada uno de los elementos y le ejecuta una función que:
+      $(".btnChangeIcon").filter(function(){
+        //$(this) se refiere ahora a cada uno de los elementos .btnChangeIcon a medida que se itera sobre ellos,
+        //$(this).attr("mode"), obtiene el valor del atributo "mode" de ese elemento (nombre del icono o la palabra clave por la que se va a buscar),
+        //toLowerCase(), convierte también este valor a minúsculas, igual que se hizo con el texto del buscador,
+        //indexOf(value), busca la cadena de texto que el usuario escribió (value), la busca dentro del valor del atributo mode,
+        //si la cadena es encontrada, indexOf() devuelve la posición donde la encontró, que será un número mayor o igual a cero (>= 0),
+        //si no la encuentra, devuelve -1,
+        //el > -1 convierte el resultado en un valor booleano (true si se encontró, false si no),
+        //finalmente, .toggle(true/false) toma este valor booleano:
+          // Si es true (se encontró una coincidencia), el elemento se muestra.
+          // Si es false (no hubo coincidencia), el elemento se oculta.
+        $(this).toggle($(this).attr("mode").toLowerCase().indexOf(value) > -1);
+      })
+    })
+  })
+
+  //** Asigna el icono de la modal al input **/
+  //sobre el DOM, cuando click sobre el elemento con class .btnChangeIcon (el icono botón de la modal),
+  //ejecuta función enviando el elemento (e)
+  $(document).on("click", ".btnChangeIcon", function(e){
+
+    //desactiva las acciones por defecto del elemento e (icono botón del modal)
+    e.preventDefault();
+
+    //selecciona el elemento con class .iconView y cambia html por un nuevo icono <i...></i>
+    //cuya clase contenga el valor del atributo "mode"
+    $(".iconView").html(`<i class="`+$(this).attr("mode")+`"></i>`);
+    //selecciona el elemento que genera el evento y a su value le asigna el valor del atributo "mode"
+    $(event.target).val($(this).attr("mode"));
+
+    //oculta el elemento con id = a myIcon, la ventana modal
+    $("#myIcon").hide();
+
+  });
+
+}
+
+/*====================================================================================
+  Función Para cerrar la ventana modal que tenga el atributo data-bs-dismiss="modal"
+=====================================================================================*/
+//selecciona todo el DOM, escucha el eveno "click" sobre el elemento que tenga
+//el atributo data-bs-dismiss con valor = "modal" y ejcuta función:
+$(document).on("click", '[data-bs-dismiss="modal"]', function(){
+  
+  //selecciona todos los elementos con class .modal
+  var modal = $(".modal");
+  
+  //.each(), método de jQuery que itera sobre cada elemento (i) de la colección modal
+  modal.each((i)=>{
+    //modal[i], dentro del bucle, esta sintaxis accede a cada modal [i] de forma individual,
+    //.hide(), método que oculta el elemento seleccionado, haciendo que el modal desaparezca de la vista.
+    $(modal[i]).hide();
+  });
+
+})
 
 
