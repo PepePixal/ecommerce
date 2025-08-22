@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content mb-5">
     <div class="container">
         <div class="card">
             <div class="card-header">
