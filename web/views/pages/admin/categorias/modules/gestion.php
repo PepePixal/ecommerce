@@ -33,7 +33,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div><!--Fin Card Head -->
 
                 <div class="card-body">
 
@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div><!--Fin Primer bloque -->
 
                     <!--======================================
                         SEGUNDO BLOQUE FORMULARIO
@@ -191,7 +191,8 @@
                                     <div class="form-group pb-3 text-center">
                                         <label class="float-left">Imagen <sup class="text-danger font-weight-bold">*</sup></label>
                                         <label for="image_category">
-                                            <img src="/views/assets/img/categories/default/default-image.jpg" class="img-fluid">
+                                            <!-- la class changeImage es para la validación y cambio de url de img con el método validateImageJS() -->
+                                            <img src="/views/assets/img/categories/default/default-image.jpg" class="img-fluid changeImage">
                                             <p class="help-block small mt-3">Tamaño recomendado 1000 x 600 px | Peso Max. 2MB | Formato: PNG o JPG</p>
                                         </label>
                                         <div class="custom-file">
@@ -202,6 +203,7 @@
                                             name="image_category"
                                             accept="image/*"
                                             maxSize="2000000"
+                                            onchange="validateImageJS(event, 'changeImage')"
                                             requirede
                                             >
 
@@ -210,17 +212,14 @@
 
                                             <label for="image_category" class="custom-file-label" >Buscar Archivo</label>
                                         </div>
-
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                
-                    </div>                            
 
-                </div>
+                    </div><!--Fin Segundo bloque -->
+
+                </div><!--Fin Card body -->
                 
                 <div class="card-footer">
                     <div class="container">
@@ -237,12 +236,13 @@
 
                         </div>
                     </div>
-                </div>
+                </div><!--Fin Card body -->
 
             </form>
         </div>
     </div>
 </div>
+
 
 <!--===================================================================
   Ventana Modal de Bootstrap, con la libreria de iconos de fontawesome
@@ -291,4 +291,4 @@
         
         </div>
     </div>
-</div>
+</div><!--Fin Modal -->

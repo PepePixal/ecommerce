@@ -316,3 +316,71 @@ if($('.tags-input').length > 0){
   }); 
 
 }
+
+/*====================================================================================
+  Validación de imágen en el form
+=====================================================================================*/
+//recibe params evento, y tagImg (nombre de la clase del elemento html <img> donde se aplica la funcion)
+function validateImageJS(event, tagImg){
+
+  //activa el plugin de alerta SweetAlert en modo loading
+  fncSweetAlert("loading", "", "");
+
+  //event.target.files es una propiedad de JavaScript que se utiliza para acceder a los archivos seleccionados
+  //por un usuario a través de un elemento <input> de tipo file.
+  //Es un FileList que contiene una lista de los archivos seleccionados y sus propiedades (name, size, type, etc).
+  var image = event.target.files[0];
+
+  //valida si la var image NO está definida
+  if (image == undefined){
+    //detiene el loader de SweetAler y para el código
+    fncSweetAlert("close", "", "");
+    return;
+  }
+
+  /*=====================================================
+    Valida los tipos de formatos de imágenes permitidos
+  =====================================================*/
+  //si el tipo de imagen NO es:
+  if (image["type"] !== "image/jpeg" && (image["type"]) !== "image/png" && (image["type"]) !== "image/gif" ) {
+    //muestra alerta y para el código
+    fncSweetAlert("error", "El formato de la imagen debe ser JPG o GIF o PNG", null);
+    return;
+  }
+  /*=====================================================
+    Valida el tamaño de la imágen en bytes
+  =====================================================*/
+  else if (image["size"] > 2000000) {
+    fncSweetAlert("error", "El peso de la imagen debe ser menor que 2MB", null);
+    return;
+  }
+  /*=====================================================
+    Mostrar la imagen temporal
+  =====================================================*/
+  else {
+
+    //nueva instancia del objeto JS FileReader(), que permite leer de forma asíncrona
+    //el contenido de archivos (File) o Blobs (Binary Large Objects) almacenados en el cliente
+    var data = new FileReader();
+    //método readAsDataURL() le dice al FileReader que lea el archivo que se le pasa como argumento (image) y
+    //que lo codifique en una Data URL, que es una cadena de texto que representa el contenido del archivo
+    data.readAsDataURL(image);
+
+    //cuando se haya cargado data (archivo img), ejecuta función enviando la información del evento load
+    $(data).on("load", function(event){
+      //console.log(event);
+
+      //obtiene el resultado del target del evento y lo asigna a path
+      var path = event.target.result
+      
+      //detiene la alerta SweetAlert
+      fncSweetAlert("close", "", "");
+
+      //obtiene el elemento con la class recibida como param en la funcion validateImageJS(.., tagImg) y
+      //al atributo "src" del elemento le asigna el valor de la var path
+      $("."+tagImg).attr("src", path);
+      
+    })
+  }
+
+}
