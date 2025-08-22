@@ -9,9 +9,37 @@ class CategoriesController {
         if (isset($_POST["name_category"])){
             
             //ejecuta script con SweetAlert en modo loading
-            echo '<script>
-                fncSweetAlert("loading", "", "");
-            </script>';
+            // echo '<script>
+            //     fncSweetAlert("loading", "", "");
+            // </script>';
+
+            /*=========================================
+              Validar y guardar la imagen
+            ===========================================*/
+            //valida si existe y no es NULL la var "tmp_name" y que la var no esté vacia
+            if (isset($_FILES["image_category"]["tmp_name"]) && !empty($_FILES["image_category"]["tmp_name"])){
+
+                //obtine arreglo con la info del archivo enviado por el form (imagen categoria)
+                $image = $_FILES["image_category"];
+                //var con la url de la carpeta, según la url de la categoría, para guardar el archivo subido
+                $folder = "assets/img/categories/".$_POST["url_category"];
+                //var con el nombre del archivo igual a la url de la categoría
+                $name = $_POST["url_category"];
+                //vars con el tamaño, en pixels, con el que queremos guardar las imágenes 
+                $width = 1000;
+                $height = 600;
+
+                //llama método saveImage() enviando el arreglo con la info del archivo (imagen), 
+                //carpeta donde gurdar el archivo y nombre del archivo a guardar, tamaño de la imagen,
+                //el método retornara el nombre final del archivo a guardar en la BD o error
+                $saveImageCategory = TemplateController::saveImage($image, $folder, $name, $width, $height);
+
+                eco($saveImageCategory);
+
+
+
+            }
+            return;
 
             /*=========================================
               Validar y guardar la info en la BD
@@ -32,13 +60,8 @@ class CategoriesController {
                 "date_created_category" => date("Y-m-d")
             );
 
-            eco($fields);
-
             //llama método que hace la consulta a la BD a través de la api rest
             $createData = CurlController::request($url, $method, $fields);
-
-            eco($createData);
-
 
             //si el alta del registro ha sido exitosa, status = 200
             if ($createData->status == 200){

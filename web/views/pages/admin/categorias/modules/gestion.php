@@ -2,7 +2,8 @@
     <div class="container">
         <div class="card">
             <!-- needs-validate validación con js / novalidate desactiva la validacion html -->
-            <form method="post" class="needs-validation" novalidate>
+            <!-- enctype="multipart/form-data" permite al form trabajar con archivos (img, etc) -->
+            <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
 
                 <!-- valida si la var $admin NO está vacia - EDITANDO  -->
                 <?php if (!empty($admin)): ?>
@@ -204,7 +205,7 @@
                                             accept="image/*"
                                             maxSize="2000000"
                                             onchange="validateImageJS(event, 'changeImage')"
-                                            requirede
+                                            required
                                             >
 
                                             <div class="valid-feedback">Completado</div>

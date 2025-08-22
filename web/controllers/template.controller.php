@@ -11,6 +11,9 @@ class TemplateController{
         include "views/template.php";
     }
 
+    /*==========================================
+      Obtener la ruta o path
+    ===========================================*/
     //retorna la ruta principal o dominio del sitio, obtenida de $_SERVER
     static public function path(){
 
@@ -86,7 +89,6 @@ class TemplateController{
 
     }
 
-
     /*==========================================
       Limpiar HTML para JSON
     ===========================================*/
@@ -127,5 +129,109 @@ class TemplateController{
         return $value;
     }
 
+    /*==========================================
+      Almacenar imágenes al servidor
+    ===========================================*/
+    //recibe info del archivo $image a guardar, carpeta, nombre y tamaño con el que queremos guardar la imagen,
+    //retorna el nombre final del archivo a guradar en la BD o error
+    static public function saveImage($image, $folder, $name, $width, $height){
+        
+        //valida si existe y no es null la var ["tmp_name"] y no está vacia
+        if (isset($image["tmp_name"]) && !empty($image["tmp_name"])) {
+
+            /*==============================================================
+              Configura la ruta del directorio donde se guardará la imagen
+            ===============================================================*/
+            //agrega la carpeta views/ a la ruta recibida en $folder y lo convierte todo a minúsculas.
+            //estó servirá por si tenemos los assets/ en otro directorio, lo cambiamos aquí.
+            $directory = strtolower("views/".$folder);
+
+            /*===================================================================
+              Validar si NO existe el directorio final, crearlo con los permisos
+            ====================================================================*/
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755);
+            }
+
+            /*===================================================================
+              Capturar el alto y ancho originaes de la imagen
+            ====================================================================*/
+            //getimagesize() retorna un arreglo cuyos index [0] y [1] son whidth y height de una imagen
+            //list() asigna a variables, si los valores son obtenidos de un array,
+            list($lastWidth, $lastHeight) = getimagesize($image["tmp_name"]);
+
+            //validar si el ancho $lastWidht o el alto $lastHeight originales de la imagen,
+            //son menores que los queremos guradar, recibidos como params $whidht y $height 
+            if ($lastWidth < $width || $lastHeight < $height) {
+
+                //asigna los tamaños tamaños deseados a los tamaños originales
+                $lastWidth = $width;
+                $lastHeight = $height;
+            }
+
+            /*===================================================================
+              Según el tipo de archivo se asignan funciones
+            ====================================================================*/
+            if($image["type"] == "image/jpeg"){
+
+                //define extensión del archivo a guardar
+                $newName = $name.'.jpg';
+                //define el directorio y nombre final, donde guardar el archivo
+                $folderPath = $directory.'/'.$newName;
+                //crea una copia de la imagen temp
+
+    //debug($image["tmp_name"]);
+
+                $start = imagecreatefromjpeg($image["tmp_name"]);
+                //instrucciones para aplicar a la imagen definitiva
+                $end = imagecreatetruecolor($width, $height);
+                //transforma la copia de la imagen tmp, tomando los nuevos tamaños
+                imagecopyresized($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
+                //guarda la imagen final $end, en el directorio y con el nombre de $floderPath
+                imagejpeg($end, $folderPath);
+
+            }
+            
+            if($image["type"] == "image/png"){
+
+                //define extensión del archivo a guardar
+                $newName = $name.'.png';
+                //define el directorio y nombre final, donde guardar el archivo
+                $folderPath = $directory.'/'.$newName;
+                //crea una copia de la imagen temp
+                $start = imagecreatefrompng($image["tmp_name"]);
+                //instrucciones para aplicar a la imagen definitiva
+                $end = imagecreatetruecolor($width, $height);
+                //mantiene la transparencia si existe
+                imagealphablending($end, FALSE);
+                imagesavealpha($end, TRUE);
+                //transforma la copia de la imagen tmp, tomando los nuevos tamaños
+                imagecopyresampled($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
+                //guarda la imagen final $end, en el directorio y con el nombre de $floderPath
+                imagejpeg($end, $folderPath);
+
+            }
+            
+            if($image["type"] == "image/gif"){
+
+                //define extensión del archivo a guardar
+                $newName = $name.'.gif';
+                //define el directorio y nombre final, donde guardar el archivo
+                $folderPath = $directory.'/'.$newName;
+                //gurada la imagen, en el directorio y con el nombre de $floderPath 
+                move_uploaded_file($image["tmp-name"], $folderPath);
+            }
+
+            //retorna el nombre del archivo, para guardarlo en la BD
+            return $newName;
+
+        //si la var ["tmp_name"] NO existe o es null o está vacia
+        } else {
+
+            return "error";
+
+        }
+
+    }
 
 }
