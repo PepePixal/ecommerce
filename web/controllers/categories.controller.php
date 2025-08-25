@@ -9,9 +9,9 @@ class CategoriesController {
         if (isset($_POST["name_category"])){
             
             //ejecuta script con SweetAlert en modo loading
-            // echo '<script>
-            //     fncSweetAlert("loading", "", "");
-            // </script>';
+            echo '<script>
+                fncSweetAlert("loading", "", "");
+            </script>';
 
             /*=========================================
               Validar y guardar la imagen
@@ -34,12 +34,20 @@ class CategoriesController {
                 //el método retornara el nombre final del archivo a guardar en la BD o error
                 $saveImageCategory = TemplateController::saveImage($image, $folder, $name, $width, $height);
 
-                eco($saveImageCategory);
+            //si la var "tmp_name" NO existe o es NULL o está vacia  
+            } else {
 
+                //ejecuta script con alerta Notice y limpia Inputs
+                echo '<script>
+                        fncFormatInputs():
+                        fncNotice(3, "El campo imagen no puede ir vacio");
+                </script>';
 
+                return;
 
             }
-            return;
+
+            
 
             /*=========================================
               Validar y guardar la info en la BD
@@ -54,7 +62,7 @@ class CategoriesController {
                 "name_category" => trim(TemplateController::capitalize($_POST["name_category"])),
                 "url_category" => $_POST["url_category"],
                 "icon_category" => $_POST["icon_category"],
-                "image_category" => "",
+                "image_category" => $saveImageCategory,
                 "description_category" => trim($_POST["description_category"]),
                 "keywords_category" => strtolower($_POST["keywords_category"]),
                 "date_created_category" => date("Y-m-d")

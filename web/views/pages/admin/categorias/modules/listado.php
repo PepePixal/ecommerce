@@ -26,7 +26,7 @@
                     </thead>
 
                     <tbody>
-                        <tr>
+                        <!-- <tr>
 							<td>1</td>
 							<td>
 								<input type="checkbox" data-size="mini" data-bootstrap-switch data-off-color="danger" data-on-color="dark" checked="true">
@@ -39,9 +39,9 @@
 								<img src="/views/assets/img/categories/default/default-image.jpg" class="img-thumbnail rounded">
 							</td>
 							<td>
-                                <!-- reduce el texto a mostrar, a los 25 primeros carácteres de todo el párrafo original-->
-								<?php echo templateController::reduceText("Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit voluptates porro voluptatum sequi earum dignissimos itaque dolores magnam odit nam alias quisquam ut aliquid sed cum molestiae deleniti, hic voluptas!", 25) ?>
-							</td>
+                                <!-- reduce el texto a mostrar, a los 25 primeros carácteres de todo el párrafo original -->
+								<!-- <?php echo templateController::reduceText("Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit voluptates porro voluptatum sequi earum dignissimos itaque dolores magnam odit nam alias quisquam ut aliquid sed cum molestiae deleniti, hic voluptas!", 25) ?> -->
+							<!-- </td>
 							<td>
 								<span class="badge badge-primary rounded-pill px-3 py-1">lorem</span>
 								<span class="badge badge-primary rounded-pill px-3 py-1">ipsum</span>
@@ -66,7 +66,7 @@
 									</a>
 								</div>
 							</td>
-						</tr>
+						</tr> -->
 
                     </tbody>
                 </table>

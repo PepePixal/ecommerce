@@ -147,17 +147,17 @@ class TemplateController{
             $directory = strtolower("views/".$folder);
 
             /*===================================================================
-              Validar si NO existe el directorio final, crearlo con los permisos
+              Si NO existe el directorio final, crearlo con los permisos
             ====================================================================*/
             if (!file_exists($directory)) {
                 mkdir($directory, 0755);
             }
 
             /*===================================================================
-              Capturar el alto y ancho originaes de la imagen
+              Capturar el ancho y alto originales de la imagen
             ====================================================================*/
-            //getimagesize() retorna un arreglo cuyos index [0] y [1] son whidth y height de una imagen
-            //list() asigna a variables, si los valores son obtenidos de un array,
+            //getimagesize() retorna un arreglo cuyos index [0] y [1] son whidth y height de una imagen.
+            //list() asigna valores a las variables, si los valores son obtenidos de un array
             list($lastWidth, $lastHeight) = getimagesize($image["tmp_name"]);
 
             //validar si el ancho $lastWidht o el alto $lastHeight originales de la imagen,
@@ -170,22 +170,19 @@ class TemplateController{
             }
 
             /*===================================================================
-              Según el tipo de archivo se asignan funciones
+              Según el tipo de archivo, se asignan funciones
             ====================================================================*/
             if($image["type"] == "image/jpeg"){
 
-                //define extensión del archivo a guardar
+                //define nombre y extensión del archivo a guardar
                 $newName = $name.'.jpg';
                 //define el directorio y nombre final, donde guardar el archivo
                 $folderPath = $directory.'/'.$newName;
-                //crea una copia de la imagen temp
-
-    //debug($image["tmp_name"]);
-
+                //toma la imagen temporal y la carga en mem como un recurso de imagen
                 $start = imagecreatefromjpeg($image["tmp_name"]);
-                //instrucciones para aplicar a la imagen definitiva
+                //crea un nuevo lienzo en blanco, con el tamaño especificado
                 $end = imagecreatetruecolor($width, $height);
-                //transforma la copia de la imagen tmp, tomando los nuevos tamaños
+                //toma la imagen original y la pega en el nuevo lienzo, escalando a las nuevas dimensiones
                 imagecopyresized($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
                 //guarda la imagen final $end, en el directorio y con el nombre de $floderPath
                 imagejpeg($end, $folderPath);
@@ -198,14 +195,14 @@ class TemplateController{
                 $newName = $name.'.png';
                 //define el directorio y nombre final, donde guardar el archivo
                 $folderPath = $directory.'/'.$newName;
-                //crea una copia de la imagen temp
+                //toma la imagen temporal y la carga en mem como un recurso de imagen
                 $start = imagecreatefrompng($image["tmp_name"]);
-                //instrucciones para aplicar a la imagen definitiva
+                //crea un nuevo lienzo en blanco, con el tamaño especificado
                 $end = imagecreatetruecolor($width, $height);
                 //mantiene la transparencia si existe
                 imagealphablending($end, FALSE);
                 imagesavealpha($end, TRUE);
-                //transforma la copia de la imagen tmp, tomando los nuevos tamaños
+                //toma la imagen original y la pega en el nuevo lienzo, escalando a las nuevas dimensiones
                 imagecopyresampled($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
                 //guarda la imagen final $end, en el directorio y con el nombre de $floderPath
                 imagejpeg($end, $folderPath);

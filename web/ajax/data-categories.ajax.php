@@ -185,20 +185,43 @@ class DatatableController{
                         /*===========================
                           Status
                         ===========================*/
-                        $status_category = $value->status_category;
+                        //si status_category == 1 , significa que está activa, mostrar chechbox selecionado
+                        if ($value->status_category == 1){
+
+                            $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark' checked='true'>";
+                    
+                        //si status_category 0 , significa que está inactiva, mostrar chechbox desseleccionado
+                        } else {
+
+                             $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark'>";
+                        }
 
                         /*===========================
                           Textos
                         ===========================*/
-                        //define variables
                         $name_category = $value->name_category;
-                        $url_category = $value->url_category;
-                        $image_category = $value->image_category;
-                        $description_category = $value->description_category;
-                        $keywords_category = $value->keywords_category;
+
+                        $url_category = "<a href='/".$value->url_category."' target='blank' class='badge badge-light px-3 py-1 border rounded-pill'>/".$value->url_category."</a>";
+
+                        $image_category = "<img src='/views/assets/img/categories/".$value->url_category."/".$value->image_category."' class='img-thumbnail rounded'>";
+
+                        $description_category = templateController::reduceText($value->description_category, 25);
+                        
+                        $keywords_category = "";
+                        //obtiene los valores de $value->keywords_category separados por , y genera el arreglo $keywordsArray
+                        $keywordsArray = explode(",", $value->keywords_category);
+                        //itera el arreglo y por cada elemento $item:
+                        foreach ($keywordsArray as $index => $item) {
+                            //en cada iteración, agrega un span con el valor $item, como cadena string la var $keyswords_category
+                            $keywords_category .= "<span class='badge badge-primary rounded-pill px-3 py-1'>".$item."</span>";
+                        }
+
                         $subcategories_category = $value->subcategories_category;
+
                         $products_category = $value->products_category;
-                        $views_category = $value->views_category;
+
+                        $views_category = "<span class='badge badge-warning rounded-pill px-3 py-1'><i class='fas fa-eye'></i> ".$value->views_category."</span>";
+
                         $date_updated_category = $value->date_updated_category;
 
                         //iconos editar y eliminar.
