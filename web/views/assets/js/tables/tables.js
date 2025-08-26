@@ -151,7 +151,7 @@ $(document).on("click",".deleteItem", function(){
       //Se usa principalmente para enviar datos a través de una solicitud HTTP, especialmente con la API fetch(),
       //de manera sencilla a través de JavaScript.
       var data = new FormData();
-      //agrega claves y sus valores a data, para la consulta ajax
+      //agrega claves y sus valores a data, para enviar con la consulta ajax
       data.append("token", token);
       data.append("table", table);
       data.append("id", idItem);
@@ -176,11 +176,21 @@ $(document).on("click",".deleteItem", function(){
             fncMatPreloader("off");
             fncSweetAlert( "success", "Registro borrado correctamente", location.reload());
           
-          //si la respuesta ha sido "no-borrar"
+          //si la respuesta ha sido "no-borrar", por ser el único registro de la tabla
           } else if (response == "no-borrar"){
 
-            fncMatPreloader("off");
-            fncToastr("warning", "Este registro no se puede borrar");
+            //validar si no-borrar viene de intentarlo en la tabla categories
+            if (table == categories) {
+
+              fncMatPreloader("off");
+              fncToastr("warning", "Esta categoría no se puede borrar, porque tiene subcategorías");
+
+            //si no viene de la tabla categories  
+            } else {
+              
+              fncMatPreloader("off");
+              fncToastr("warning", "Este registro no se puede borrar");
+            }
 
           //si la respuesta no ha sido 200 ni "no-borrar", es que ha habido un error
           } else {

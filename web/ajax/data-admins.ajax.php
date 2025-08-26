@@ -184,6 +184,7 @@ class DatatableController{
 
                         //iconos editar y eliminar.
                         //a href, envia a la url agregandole el argumento admin con el id_admin, codificado con base64_encode()
+                        //button (bootstrap) con class deleteItem para ser identificado por un script (tables.js) que ejecutará la accion de eliminar un registro, según los datos de los atributos rol=, table=, column=, idItem=
                         $actions = "<div class=btn-group>
                                     <a href='/admin/administradores/gestion?admin=".base64_encode($value->id_admin)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
                                         <i class='fas fa-pencil-alt text-white'></i>
