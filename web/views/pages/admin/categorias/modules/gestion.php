@@ -1,3 +1,44 @@
+<?php
+    //gestion.php se invoca tanto para alta nueva como para edicion de Categorías,
+    //si se invoca desde editar, la url contiene argumento (?) con la var category con el id_category codificado,
+    //de la categoría a editar, que podemos obtener de la var super glob $_GET,
+    //se decodifica y se usa para traer la info del registro de la categoria de la BD, e imprimirla en el form
+
+    //validar si en la url viene la var category
+    if (isset($_GET['category'])) {
+
+        //var con los campos que necesitaremos del registro a editar, para mostrarlos en los inputs del el form
+        $select = "id_category,name_category,url_category,icon_category,image_category,description_category,keywords_category";
+
+        //define vars para buscar el rgistro por el id_category decodificado, en la tabla de la BD, a traves de la API
+        //En la tabla categories, en la columna id_category, busca un registro cuyo valor sea igual al valor de la var 'catrgory', seleccionando solo los datos de las colunas en $select
+        $url = "categories?linkTo=id_category&equalTo=".base64_decode($_GET['category'])."&select=".$select;
+        $method = "GET";
+        $fields = array();
+
+        //llama método static request(), enviando parámetros, que retorna un objeto a $category
+        $category =  CurlController::request($url, $method, $fields);
+
+        //valida si el valor de la propiedad [status] es = 200, respuesta válida
+        if ($category->status == 200) {
+
+            //obtiene el indice [0] del arreglo de la propiedad [results], el registro buscado (objeto).
+            $category = $category->results[0];
+
+        //si la respuesta ha sido error
+        } else {
+            //asigna null a la var $admin
+            $category = null;
+        }
+
+    //si en la url no viene la var admin
+    } else {
+        //asigna null a la var $admin
+        $category = null;
+    }
+
+?>
+
 <div class="content mb-5">
     <div class="container">
         <div class="card">
@@ -5,12 +46,11 @@
             <!-- enctype="multipart/form-data" permite al form trabajar con archivos (img, etc) -->
             <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
 
-                <!-- valida si la var $admin NO está vacia - EDITANDO  -->
-                <?php if (!empty($admin)): ?>
+                <!-- valida si la var $category NO está vacia - EDITANDO  -->
+                <?php if (!empty($category)): ?>
 
-                    <!-- para capturar el valor de id_admin y de la password , genera inputs hidden -->
-                    <input type="hidden" name=idAdmin value="<?php echo base64_encode($admin->id_admin); ?>">
-                    <input type="hidden" name=oldPassword value="<?php echo $admin->password_admin; ?>">
+                    <!-- como está editando, genera input hidden para enviar el id_coategory, codificado, al controller -->
+                    <input type="hidden" name="idCategory" value="<?php echo base64_encode($category->id_category); ?>">
 
                 <?php endif ?>
 
@@ -20,7 +60,7 @@
 
                             <div class="col-12 col-lg-6 text-center text-lg-left">
                                 <!-- comprobar si está EDITANDO -->
-                                <?php if (!empty($admin)): ?>
+                                <?php if (!empty($category)): ?>
                                     <h4 class="mt-3">Editando Categoría</h4>
                                 <?php else: ?>
                                     <h4 class="mt-3">Añadir Categoría</h4>
@@ -62,6 +102,8 @@
                                         <label for="name_category">Nobre Cat. <sup class="text-danger font-weight-bold">*</sup></label>
                                         <!-- el evento onchange llama a la función enviando el valor del elemento (input) que dispara el evento y
                                           el tipo de tabla sobre la que buscar si el elemento ya existe -->
+                                        <!-- readonly si se está editando el campo, para no modificarlo (por lo de la url)-->
+                                        <!-- el value se asigna si la var $category no viene vacia, está EDITANDO -->
                                         <input
                                             type="text"
                                             class="form-control"
@@ -69,6 +111,8 @@
                                             id="name_category"
                                             name="name_category"
                                             onchange="validateDataRepeat(event, 'category')"
+                                            <?php if (!empty($category)): ?> readonly  <?php endif ?>
+                                            value="<?php if (!empty($category)): ?><?php echo $category->name_category; ?><?php endif ?>"
                                             required
                                         >
                                         
@@ -88,6 +132,7 @@
                                             id="url_category"
                                             name="url_category"
                                             readonly
+                                            value="<?php if (!empty($category)): ?><?php echo $category->url_category; ?><?php endif ?>"
                                             required
                                         >
                                         
@@ -102,11 +147,10 @@
                                         <label for="icon_category">Icono <sup class="text-danger font-weight-bold">*</sup></label>
                                         <!-- el atributo de evento onfocus, llama la función js addIcon() enviando el parámetro event,
                                          que es un objeto que contiene toda la información sobre el evento, en este caso el onfocus -->
-                                        
                                         <div class="input-group">
                                             <!-- class iconView, para el cambio de icono desde la ventana modal -->
                                             <span class="input-group-text iconView">
-                                                <i class="fas fa-shopping-bag"></i>
+                                                <i class="<?php if (!empty($category)): ?><?php echo $category->icon_category; ?><?php else: ?>fas fa-shopping-bag<?php endif ?>"></i>
                                             </span>
                                             
                                             <input
@@ -115,7 +159,7 @@
                                             id="icon_category"
                                             name="icon_category"
                                             onfocus="addIcon(event)"
-                                            value="fas fa-shopping-bag"
+                                            value="<?php if (!empty($category)): ?><?php echo $category->icon_category; ?><?php else: ?>fas fa-shopping-bag<?php endif ?>"
                                             required
                                             >                 
                                         </div>
@@ -142,6 +186,7 @@
                                     ========================================-->
                                     <div class="form-group pb-3">
                                         <label for="description_category">Descripción <sup class="text-danger font-weight-bold">*</sup></label>
+                                        <!--texarea no tiene value, si está EDITANDO el texto se inserta en el própio textarea -->
                                         <textarea
                                         rows="9"
                                         class="form-control mb-3"
@@ -150,7 +195,8 @@
                                         name="description_category"
                                         onchange="validateJS(event, 'complete')"
                                         required
-                                        ></textarea>
+                                        ><?php if (!empty($category)): ?><?php echo $category->description_category; ?><?php endif ?>
+                                        </textarea>
 
                                         <div class="valid-feedback">Completado</div>
                                         <div class="invalid-feedback">Campo obligatorio</div>
@@ -171,13 +217,13 @@
                                             id="keywords_category"
                                             name="keywords_category"
                                             onchange="validateJS(event, 'complete')"
+                                            value="<?php if (!empty($category)): ?><?php echo $category->keywords_category; ?><?php endif ?>"                                            
                                             required
                                         >
                                         
                                         <div class="valid-feedback">Completado</div>
                                         <div class="invalid-feedback">Campo obligatorio</div>
                                     </div>
-
 
                                 </div>
                             </div>
@@ -192,10 +238,26 @@
                                     <div class="form-group pb-3 text-center">
                                         <label class="float-left">Imagen <sup class="text-danger font-weight-bold">*</sup></label>
                                         <label for="image_category">
-                                            <!-- la class changeImage es para la validación y cambio de url de img con el método validateImageJS() -->
-                                            <img src="/views/assets/img/categories/default/default-image.jpg" class="img-fluid changeImage">
+
+                                            <!-- si $category no viene vacia, está EDITANDO-->
+                                            <?php if (!empty($category)): ?>
+                                                <!-- la class changeImage es para la validación y cambio de url de img con el método validateImageJS() -->
+                                                <img src="/views/assets/img/categories/<?php echo $category->url_category ?>/<?php echo $category->image_category ?>" class="img-fluid changeImage">
+
+                                                <!-- envia el nombre de la imagen en un input oculto, con name=old_image_category -->
+                                                <input type="hidden" value="<?php echo $category->image_category ?>" name="old_image_category">
+
+                                            <!-- si category viene vacia, asigna la imagen default     -->
+                                            <?php else: ?>
+                                                
+                                                <img src="/views/assets/img/categories/default/default-image.jpg" class="img-fluid changeImage">
+                                            
+                                            <?php endif ?>
+ 
                                             <p class="help-block small mt-3">Tamaño recomendado 1000 x 600 px | Peso Max. 2MB | Formato: PNG o JPG</p>
+
                                         </label>
+                                        <!-- el required solo cuando es un ALTA nueva -->
                                         <div class="custom-file">
                                             <input
                                             type="file"
@@ -205,7 +267,9 @@
                                             accept="image/*"
                                             maxSize="2000000"
                                             onchange="validateImageJS(event, 'changeImage')"
+                                            <?php if (empty($category)): ?>
                                             required
+                                            <?php endif ?>
                                             >
 
                                             <div class="valid-feedback">Completado</div>

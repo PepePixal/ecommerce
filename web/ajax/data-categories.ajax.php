@@ -70,14 +70,13 @@ class DatatableController{
             }
 
 
-            //var con las columnas de donde obtener la info del registro. En SQL * representa de todas las columnas
+            //var con las columnas de donde obtener la info del registro.
+            //En SQL * representa de todas las columnas
             $select = "*";
             
-
             /*============================================
               Búsqueda de datos del buscador DataTable
             ============================================*/
-
             //valida si NO esta vacia la propiedad value de search
             if (!empty($_POST['search']['value'])) {
 
@@ -135,7 +134,6 @@ class DatatableController{
                     return;
                 }
 
-
             //si no hay value para buscar (buscador de DataTable)
             } else {
 
@@ -143,7 +141,7 @@ class DatatableController{
                 Obtener datos seleccionados, en un orden
                 ============================================*/
                 //Define la url utilizando las variables creadas con la info que genera DataTable en $_POST.
-                //De la tabla categories, selecciona las columnas en $select (*) y obten la info, ordenándola según la comlumna en $orderBy,
+                //De la tabla categories, selecciona las columnas en $select (*) y obten su info, ordenándola según la comlumna en $orderBy,
                 //con el tipo de orden en $orderType, iniciando en el registro $start y finalizando en el registro $length que contiene el número de registros por paginación.
                 $url = "categories?select=".$select."&orderBy=".$orderBy."&orderMode=".$orderType."&startAt=".$start."&endAt=".$length;
                 
@@ -225,9 +223,9 @@ class DatatableController{
                         $date_updated_category = $value->date_updated_category;
 
                         //iconos editar y eliminar.
-                        //a href, envia a la url agregandole el argumento admin con el id_admin, codificado con base64_encode()
+                        //a href, envia a la url agregándole el argumento category con el id_category, codificado con base64_encode()
                         $actions = "<div class=btn-group>
-                                    <a href='/admin/categorias/gestion?admin=".base64_encode($value->id_category)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
+                                    <a href='/admin/categorias/gestion?category=".base64_encode($value->id_category)."' class='btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3'>
                                         <i class='fas fa-pencil-alt text-white'></i>
                                     </a>
                                     <button class='btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3 deleteItem' rol='admin' table='categories' column='category' idItem='".base64_encode($value->id_category)."'>

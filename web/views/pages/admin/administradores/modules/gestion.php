@@ -12,7 +12,7 @@
 
         //define vars para buscar el rgistro por el id_admin decodificado, en la tabla de la BD, a traves de la API
         //En la tabla admins, en la columna id_admins, busca un registro cuyo valor sea igual al valor de la var 'admin'
-        $url = "admins?linkTo=id_admin&equalTo=".base64_decode($_GET['admin']);
+        $url = "admins?linkTo=id_admin&equalTo=".base64_decode($_GET['admin'])."&select=".$select;
         $method = "GET";
         $fields = array();
 
