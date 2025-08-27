@@ -216,7 +216,7 @@
                                             placeholder="Palabra clave + Intro. Max. 5"
                                             id="keywords_category"
                                             name="keywords_category"
-                                            onchange="validateJS(event, 'complete')"
+                                            onchange="validateJS(event, 'complete-tags')"
                                             value="<?php if (!empty($category)): ?><?php echo $category->keywords_category; ?><?php endif ?>"                                            
                                             required
                                         >
@@ -283,6 +283,88 @@
                         </div>
 
                     </div><!--Fin Segundo bloque -->
+
+                    <!--======================================
+                        TERCER BLOQUE - Visor Metadatos
+                    ========================================-->
+                    <div class="row row-cols-1 pt-2">
+                        <div class="col">
+                            <div class="card">
+                                <!-- col-md-6 para que ocupe 2 columnas a partir de dispositivos medium -->
+                                <!-- offset-md-3 en el div crea un margen izquierdo de 3 columnas en dispositivos de tamaño medio (medium, md) y superiores.
+                                  Esto desplaza la tarjeta hacia el centro de la página, ya que la clase col-md-6 ocupa 6 de las 12 columnas disponibles en la grill de Bootstrap. -->
+                                <div class="card-body col-md-6 offset-md-3">
+                                    <!--======================================
+                                        Visor Metadatos
+                                    ========================================-->
+                                    <div class="form-group pb-3 text-center">
+                                        <label>Visor Metadatos</label>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!--======================================
+                                                        Imagen
+                                                    ========================================-->
+                                                    <figure class="mb-2">
+                                                        <!-- valida si $category no está vacia -->
+                                                        <?php if (!empty($category)): ?>
+                                                            <!-- muestra la imagen del directorio y con el nombre, de la categoria -->
+                                                            <!-- la class metaImg es para mostrar la imagen temporal, con el js de forms.js -->
+                                                            <img src="/views/assets/img/categories/<?php echo $category->url_category ?>/<?php echo $category->image_category ?>" class="img-fluid metaImg" style="width:100%">
+                                                        <?php else: ?>
+                                                            <!-- muestra la imagen por defecto -->
+                                                            <img src="/views/assets/img/categories/default/default-image.jpg" class="img-fluid metaImg" style="width:100%">
+                                                        <?php endif ?>
+                                                    </figure>
+                                                    <!--======================================
+                                                        Título
+                                                    ========================================-->
+                                                    <?php if (!empty($category)): ?>
+                                                        <h6 class="text-left text-primary mb-1 metaTitle">
+                                                            <?php echo $category->name_category ?>
+                                                        </h6>   
+                                                    <?php else: ?>
+                                                        <h6 class="text-left text-primary mb-1">
+                                                            Título
+                                                        </h6>       
+                                                    <?php endif ?>
+                                                    <!--======================================
+                                                        URL
+                                                    ========================================-->
+                                                    <p class="text-left text-success small mb-1">
+                                                        <?php echo $path ?><span class="metaURL"><?php if (!empty($category)): ?><?php echo $category->url_category ?><?php else: ?>url<?php endif ?></span>
+                                                    </p>
+                                                    <!--======================================
+                                                        Descripción
+                                                    ========================================-->
+                                                    <!-- la class metaDescription es para mostrar la descripción en tiempo real -->
+                                                    <p class="text-left small mb-1 metaDescription">
+                                                        <?php if (!empty($category)): ?>
+                                                                <?php echo $category->description_category ?>
+                                                        <?php else: ?>
+                                                                Descripción
+                                                        <?php endif ?>
+                                                    </p>
+                                                    <!--======================================
+                                                        Palabras Clave
+                                                    ========================================-->
+                                                    <p class="text-left text-secondary small mb-1 metaTags">
+                                                        <?php if (!empty($category)): ?>
+                                                                <?php echo $category->keywords_category ?>
+                                                        <?php else: ?>
+                                                                palabras clave
+                                                        <?php endif ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div><!--Fin Card body -->
                 

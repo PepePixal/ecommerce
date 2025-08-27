@@ -55,16 +55,32 @@ function validateDataRepeat(event, type){
     processData: false,
     success: function(response){
 
-      //si response = 404, significa que NO se ha encontrado el valor (value) en la BD,
-      //por tanto, si que se puede agregar al la BD
-      if (response == 404){
-        //validación tipo completa de texto seguro, del valor del elemento (input) que genera el evento
-        validateJS(event, "completa");
+        //si response = 404, significa que NO se ha encontrado el valor (value) en la BD,
+        //por tanto, si que se puede agregar a la BD
+        if (response == 404){
+          //validación tipo completa de texto seguro, del valor del elemento (input) que genera el evento
+          validateJS(event, "completa");
 
-        //llama func que crea una url, con el valor del elemento (input) que origina el evento y
-        //asigna la url creada, al value del input con class "url_category"
-        createUrl(event, "url_category" );
-      } 
+          //llama func que crea una url, con el valor del elemento (input) que origina el evento y
+          //asigna la url creada, al value del input con class "url_category"
+          createUrl(event, "url_category");
+
+          //Pone el título en el Visor de Metadatos.
+          //Obtiene el elemento con class .metaTitle y en su html le inserta el valor de event.target.value
+          $(".metaTitle").html(value);
+
+        //si se ha encontrado, significa que ya existe esa categoría en la tabla
+        } else {
+          
+          //muestra mensaje agregando la class al elemento padre
+          $(event.target).parent().addClass("was-validated");
+          //muestra mensaje obteniendo el elemento hijo con class .invalid-feedback y cambiando su html
+          $(event.target).parent().children(".invalid-feedback").html("El nombre de la categoría ya existe");
+          //limpia el valor del campo (input) que origina el evento
+          event.target.value = "";
+          //para el código y retorna
+          return;
+        }
 
     }
   })
@@ -99,6 +115,9 @@ function createUrl(event, input){
   //le asigna el valor de la var value, a su value
   $('[name="'+input+'"]').val(value);
 
+  //Pone la url en el Visor de Metadatos.
+  //Obtiene el elemento con class .metaUrl y en su html le inserta el valor de value
+  $(".metaUrl").html(value);
 }
 
 
@@ -168,8 +187,37 @@ function validateJS(event, type){
       $(event.target).parent().children(".invalid-feedback").html("Carácteres especiales en la entrada");
       //limpia el valor del elemento que dispara el evento
       event.target.value = "";
-      return
-    }  
+      return;
+
+    //si pasa la validación test  
+    } else {
+
+      //mostrar tabién el texto de descripción, en el Visor de Metadatos.
+      //obtiene el elemento  html con class .metaDescription y en su htm, inserta el value del elemento original
+      $(".metaDescription").html(event.target.value);
+    } 
+  } 
+
+  //si la validación del input es type complete-tags
+  if(type == "complete-tags"){
+    //define var con patron expresión regular válida para no inyectar código malicioso en la bs
+    var pattern = /^[-\\(\\)\\=\\%\\&\\;\\"\\'\\*\\$\\!\\¡\\?\\¿\\,\\.\\:\\-\\_\\/\\#\\0-9A-Za-zÑñÇçáéíóúÁÉÍÓÚ ]{1,}$/;
+    //valida si NO es true, el resultado de testear el valor del elemento que dispara el evento
+    // (el onchange input del formulario), con el patrón de la expresión regular. El email to tiene formato válido.
+    if(!pattern.test(event.target.value)){
+      //accede al elemento hijo cuya clase contenga ".invalid-feedback" y en su html le inserta el mensaje
+      $(event.target).parent().children(".invalid-feedback").html("Carácteres especiales en la entrada");
+      //limpia el valor del elemento que dispara el evento
+      event.target.value = "";
+      return;
+
+    //si pasa la validación test  
+    } else {
+
+      //mostrar tabién el texto de descripción, en el Visor de Metadatos.
+      //obtiene el elemento  html con class .metaDescription y en su htm, inserta el value del elemento original
+      $(".metaTags").html(event.target.value);
+    } 
   } 
 
 }
@@ -379,6 +427,11 @@ function validateImageJS(event, tagImg){
       //obtiene el elemento con la class recibida como param en la funcion validateImageJS(.., tagImg) y
       //al atributo "src" del elemento le asigna el valor de la var path
       $("."+tagImg).attr("src", path);
+
+      //obtiene el elemento con la class .metaImg (en imagen visor metadatos) y
+      //al atributo "src" del elemento le asigna el valor de la var path (url imagen temporal)
+      $(".metaImg").attr("src", path);
+      
       
     })
   }
