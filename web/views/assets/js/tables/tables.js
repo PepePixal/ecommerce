@@ -208,3 +208,20 @@ $(document).on("click",".deleteItem", function(){
   });
 
 })
+
+
+/*===============================================================================
+  Bootstrap Switch - aplicar el plugin
+=================================================================================*/
+//draw.dt avisa cuando la tabla (DataTable) ya está pintada en el dom
+$("#tables").on("draw.dt", function(){
+
+  //obtiene los input que tienen el atributo data-bootstrap-switch,
+  //los itera y para cada input aplica el plugin Bootstrap Switch con .bootstrapSwitch()
+  $("input[data-bootstrap-switch]").each(function(){
+
+    $(this).bootstrapSwitch();
+
+  })
+
+})

@@ -186,7 +186,7 @@ class DatatableController{
                         //si status_category == 1 , significa que está activa, mostrar chechbox selecionado
                         if ($value->status_category == 1){
 
-                            $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark' checked='true'>";
+                            $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='success' checked='true'>";
                     
                         //si status_category 0 , significa que está inactiva, mostrar chechbox desseleccionado
                         } else {

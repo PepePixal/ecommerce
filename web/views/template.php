@@ -219,6 +219,10 @@ $templateColor = json_decode($template->colors_template)[1]->template;
   <script src="<?php echo $path ?>views/assets/js/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   
   <!-- Tags Input plugin -->
+  <!-- https://bttstrp.github.io/bootstrap-switch/examples.html-->
+  <script src="<?php echo $path ?>views/assets/js/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
+
+  <!-- Bootstrap Switch - plugin -->
   <!-- https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/ -->
   <script src="<?php echo $path ?>views/assets/js/plugins/tags-input/tags-input.js"></script>
 
