@@ -185,13 +185,17 @@ class DatatableController{
                         ===========================*/
                         //si status_category == 1 , significa que está activa, mostrar chechbox selecionado
                         if ($value->status_category == 1){
+                            //atributos para el plugin Bootstrap Switch.
+                            //atributos idItem=, table=, column=, para cambio de estado del switch en tables.js
 
-                            $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='success' checked='true'>";
+                            $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='success' checked='true' idItem='".base64_encode($value->id_category)."' table='categories' column='category' >";
                     
                         //si status_category 0 , significa que está inactiva, mostrar chechbox desseleccionado
                         } else {
+                            //atributos para el plugin Bootstrap Switch.
+                            //atributos idItem=, table=, column=, para cambio de estado del switch en tables.js
 
-                             $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark'>";
+                             $status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark' idItem='".base64_encode($value->id_category)."' table='categories' column='category' >";
                         }
 
                         /*===========================

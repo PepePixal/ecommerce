@@ -216,12 +216,76 @@ $(document).on("click",".deleteItem", function(){
 //draw.dt avisa cuando la tabla (DataTable) ya está pintada en el dom
 $("#tables").on("draw.dt", function(){
 
-  //obtiene los input que tienen el atributo data-bootstrap-switch,
-  //los itera y para cada input aplica el plugin Bootstrap Switch con .bootstrapSwitch()
-  $("input[data-bootstrap-switch]").each(function(){
+    //obtiene los inputs que tienen el atributo data-bootstrap-switch,
+    //los itera y para cada input aplica el plugin Bootstrap Switch con .bootstrapSwitch()
+    $("input[data-bootstrap-switch]").each(function(){
 
-    $(this).bootstrapSwitch();
+      $(this).bootstrapSwitch({
+        //siguiendo la documentación del plugin
+        onSwitchChange: function(event, state){
+          //obtiene los atributos del elemento input donde se origina el evento y los asigna a vars
+          var idItem = $(event.target).attr("idItem");
+          var table = $(event.target).attr("table");
+          var column = $(event.target).attr("column");
+          var status = 0;
+
+          //state es true, cuando el switch está en on
+          if (state) {
+            status = 1;
+
+          //state es false, cuando el switch está en off
+          } else {
+            status = 0;
+          }
+
+          /*================
+            Solicitud ajax
+          =================*/
+          //obtiene el token del admin
+          var token = localStorage.getItem("token-admin");
+
+          //define var data en formato FormData() para enviar
+          var data = new FormData();
+
+          //agrega las etiquetas y valores a la var data
+          data.append("token", token);
+          data.append("id", idItem);
+          data.append("table", table);
+          data.append("column", column);
+          data.append("status", status);
+
+          //solicitud POST
+          $.ajax({
+
+            url: "/ajax/status-admin.ajax.php",
+            method: "POST",
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success: function(response){
+
+              if (response == 200){
+
+                fncMatPreloader("off");
+                fncToastr( "success", "Registro actualizado correctamente");
+              
+              } else {
+
+                fncMatPreloader("off");
+                fncToastr( "error", "Este registro no se pudo Actualizar");
+              }
+
+            }
+
+          })
+          
+        }
+
+      });
 
   })
 
 })
+
